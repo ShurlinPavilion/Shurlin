@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "shurlin:item/holy_pear_wand"
-  }
-}

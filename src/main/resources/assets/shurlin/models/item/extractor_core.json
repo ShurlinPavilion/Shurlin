@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "shurlin:item/extractor_core"
-  }
-}

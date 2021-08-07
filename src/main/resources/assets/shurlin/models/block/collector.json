@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "shurlin:block/worker_top",
-    "side": "shurlin:block/collector_side"
-  }
-}

@@ -11,5 +11,14 @@
 ### If you want to join me, I'll be very happy.
 如果你能加入我，我会很开心
 
-# Don't use this mod for commercial use!
-# 禁止用于商业用途
+## Don't use this mod for commercial use!
+
+## 禁止用于商业用途
+
+----------------------------------
+
+## Shurlin Mod
+Branches: 
+[WIP 1.17](https://github.com/ShurlinPavilion/Shurlin/tree/1.17) |
+[RIP 1.16.5](https://github.com/ShurlinPavilion/Shurlin/tree/1.16.5) | 
+[RIP 1.16.1](https://github.com/ShurlinPavilion/Shurlin/tree/1.16.1)
