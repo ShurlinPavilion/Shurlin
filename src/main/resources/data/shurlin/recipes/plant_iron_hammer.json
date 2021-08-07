@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X*",
+    " #X",
+    "#  "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "shurlin:plant_iron_ingot"
+    },
+    "*": {
+      "item": "shurlin:plant_iron_nugget"
+    }
+  },
+  "result": {
+    "item": "shurlin:plant_iron_hammer"
+  }
+}

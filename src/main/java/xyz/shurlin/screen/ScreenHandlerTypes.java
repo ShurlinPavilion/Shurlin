@@ -33,6 +33,9 @@ public class ScreenHandlerTypes {
     public static final ScreenHandlerType<CultivationScreenHandler> CULTIVATION_SCREEN_HANDLER_TYPE = register("cultivation_ui",
             CultivationScreenHandler::new);
 
+    public static final ScreenHandlerType<CultivationAltarScreenHandler> CULTIVATION_ALTAR = register("cultivation_altar",
+            CultivationAltarScreenHandler::new);
+
     private static <T extends ScreenHandler> ScreenHandlerType<T> register(String registryName, ScreenHandlerRegistry.SimpleClientHandlerFactory<T> entry){
             return ScreenHandlerRegistry.registerSimple(new Identifier(Shurlin.MODID, registryName), entry);
     }

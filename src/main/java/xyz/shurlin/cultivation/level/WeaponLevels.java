@@ -1,12 +1,12 @@
 package xyz.shurlin.cultivation.level;
 
-public enum WeaponLevels {
+public enum WeaponLevels{
     INFERIOR_WEAPON(1),//下品
     STANDARD_WEAPON(2),//中品
     QUALITY_WEAPON(3),//上品
-    INFERIOR_TAO_WEAPON(4),//下品道
-    STANDARD_TAO_WEAPON(5),//
-    QUALITY_TAO_WEAPON(6),
+    INFERIOR_XUAN_WEAPON(4),//下品玄
+    STANDARD_XUAN_WEAPON(5),//
+    QUALITY_XUAN_WEAPON(6),
     INFERIOR_HOLY_WEAPON(7),//伪神
     HOLY_WEAPON(8),//神
     HOLY_SPIRIT_WEAPON(9);//圣灵

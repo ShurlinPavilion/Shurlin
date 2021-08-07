@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "shurlin:block/weapon_forging_table" }
+    }
+}

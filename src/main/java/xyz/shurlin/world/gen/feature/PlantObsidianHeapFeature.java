@@ -9,6 +9,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import xyz.shurlin.Shurlin;
 import xyz.shurlin.block.Blocks;
 import xyz.shurlin.util.Utils;
@@ -29,20 +30,10 @@ public class PlantObsidianHeapFeature extends Feature<DefaultFeatureConfig> {
 //        int x = pos.getX();
 //        int z = pos.getZ();
 //        int y = structureWorldAccess.getTopY(Heightmap.Type.WORLD_SURFACE_WG, x, z);
-        pos = structureWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE_WG, pos);
+
         int r = 3;
         BlockState state = Blocks.PLANT_OBSIDIAN.getDefaultState();
-//        pos = pos.down(pos.getY() - y);
-//        float p = 0.8f;
-        for (int i = -r; i <= r; i++) {
-            for (int j = 0; j <= r; j++) {
-                for (int k = -r; k <= r; k++) {
-                    if (Utils.getAllABS(i, j, k) <= r && random.nextFloat() < 0.75) {
-                        structureWorldAccess.setBlockState(pos.south(i).up(j).east(k), state, 3);
-                    }
-                }
-            }
-        }
+        Utils.createBallFeature(structureWorldAccess,r,0.75f,0,structureWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE_WG, pos),new SimpleBlockStateProvider(state));
         return true;
     }
 }

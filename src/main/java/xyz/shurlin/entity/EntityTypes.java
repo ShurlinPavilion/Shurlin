@@ -7,8 +7,11 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import xyz.shurlin.Shurlin;
+import xyz.shurlin.entity.passive.IceWolfEntity;
 import xyz.shurlin.entity.passive.RoamingSpiritEntity;
 import xyz.shurlin.entity.projecttile.BrightMoonPollenEntity;
+import xyz.shurlin.entity.weapon.JianqiEntity;
+import xyz.shurlin.entity.weapon.XuanbingJianqiEntity;
 
 public class EntityTypes {
 //    public static final EntityType<HolyPearArrowEntity> HOLY_PEAR_ARROW_ENTITY_TYPE =
@@ -25,6 +28,20 @@ public class EntityTypes {
                             .setDimensions(0.25f, 0.25f)
             );
 
+    public static final EntityType<XuanbingJianqiEntity> XUANBING_JIANQI =
+            register("xuanbing_jianqi",
+                    EntityType.Builder.create(
+                            (EntityType.EntityFactory<XuanbingJianqiEntity>)XuanbingJianqiEntity::new, SpawnGroup.MISC)
+                            .setDimensions(0.25f, 0.25f)
+            );
+
+    public static final EntityType<IceWolfEntity> ICE_WOLF =
+            register("ice_wolf",
+                    EntityType.Builder.create(
+                            IceWolfEntity::new, SpawnGroup.MONSTER)
+                            .setDimensions(0.6f, 0.85f)
+            );
+
 //    public static final EntityType<RoamingSpiritEntity> ROAMING_SPIRIT_ENTITY_TYPE =
 //            register("roaming_spirit_entity",
 //                    EntityType.Builder.create(RoamingSpiritEntity::new, SpawnGroup.CREATURE).setDimensions(0.6f,0.6f).maxTrackingRange(8));
@@ -34,6 +51,7 @@ public class EntityTypes {
     }
 
     public static void registerAll(){
+        FabricDefaultAttributeRegistry.register(ICE_WOLF, IceWolfEntity.createAttributes());
 //        FabricDefaultAttributeRegistry.register(ROAMING_SPIRIT_ENTITY_TYPE, RoamingSpiritEntity.createAttributes());
     }
 }

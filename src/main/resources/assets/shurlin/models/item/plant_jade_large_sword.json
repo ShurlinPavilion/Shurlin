@@ -1,0 +1,26 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "shurlin:item/plant_jade_large_sword"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "scale": [16, 16, 1]
+    },
+    "thirdperson_lefthand": {
+      "scale": [16, 16, 1]
+    },
+    "firstperson_righthand": {
+      "scale": [16, 16, 1]
+    },
+    "firstperson_lefthand": {
+      "scale": [16, 16, 1]
+    },
+    "ground": {
+      "scale": [5, 5, 1]
+    },
+    "gui": {
+      "scale": [1.2, 1.2, 1.2]
+    }
+  }
+}

@@ -9,6 +9,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import xyz.shurlin.block.entity.BasicBlockEntity;
 import xyz.shurlin.recipe.AbstractWorkerRecipe;
 import xyz.shurlin.util.ShurlinLevel;
@@ -78,7 +79,6 @@ public abstract class AbstractWorkerBlockEntity extends BasicBlockEntity impleme
             } else if (itemStack3.getItem() == itemStack2.getItem()) {
                 itemStack3.increment(1);
             }
-
             itemStack.decrement(1);
         }
     }

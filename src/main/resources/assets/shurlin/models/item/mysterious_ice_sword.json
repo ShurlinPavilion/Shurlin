@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "shurlin:item/mysterious_ice_sword"
+  }
+}

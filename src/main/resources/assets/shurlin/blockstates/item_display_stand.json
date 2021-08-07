@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "shurlin:block/item_display_stand" }
+    }
+}

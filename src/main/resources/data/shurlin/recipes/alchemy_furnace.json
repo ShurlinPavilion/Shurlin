@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cultivation",
+  "pattern": [
+    "* *",
+    " * "
+  ],
+  "key": {
+    "*": {
+      "item": "shurlin:bronze_ingot"
+    }
+  },
+  "result": {
+    "item": "shurlin:alchemy_furnace"
+  }
+}

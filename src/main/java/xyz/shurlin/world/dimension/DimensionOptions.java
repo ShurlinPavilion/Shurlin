@@ -7,6 +7,7 @@ import xyz.shurlin.Shurlin;
 
 public class DimensionOptions {
     public static final RegistryKey<net.minecraft.world.dimension.DimensionOptions> HOLY_FARMER;
+    public static final RegistryKey<net.minecraft.world.dimension.DimensionOptions> ICE_SPIRIT_WORLD;
 //    public static final RegistryKey<net.minecraft.world.dimension.DimensionOptions> SHURLIN;
 
     private static RegistryKey<net.minecraft.world.dimension.DimensionOptions> register(String name){
@@ -15,6 +16,7 @@ public class DimensionOptions {
 
     static {
         HOLY_FARMER = register("holy_farmer");
+        ICE_SPIRIT_WORLD = register("ice_spirit_world");
 //        SHURLIN = register("shurlin");
     }
 }

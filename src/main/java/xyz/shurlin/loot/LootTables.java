@@ -11,6 +11,8 @@ import org.lwjgl.system.CallbackI;
 import xyz.shurlin.Shurlin;
 import xyz.shurlin.item.Items;
 
+import java.util.Objects;
+
 import static net.minecraft.loot.LootTables.*;
 
 public class LootTables {
@@ -60,13 +62,30 @@ public class LootTables {
                 FabricLootPoolBuilder builder2 = FabricLootPoolBuilder.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .withEntry(ItemEntry.builder(Items.BRIGHT_MOON_GOLDEN_LOTUS).build());
+                FabricLootPoolBuilder builder3 = FabricLootPoolBuilder.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .withEntry(ItemEntry.builder(Items.CULTIVATION_CRYSTAL_SHARD).build());
                 fabricLootSupplierBuilder.withPool(builder1.build())
-                        .withPool(builder2.build());
+                        .withPool(builder2.build())
+                .withPool(builder3.build());
             }if(NETHER_BRIDGE_CHEST.equals(identifier)){
                 FabricLootPoolBuilder builder1 = FabricLootPoolBuilder.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .withEntry(ItemEntry.builder(Items.FIREBALL_SPIRIT_MANUAL).build());
-                fabricLootSupplierBuilder.withPool(builder1.build());
+                FabricLootPoolBuilder builder2 = FabricLootPoolBuilder.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .withEntry(ItemEntry.builder(Items.FIREWORK_SPIRIT_MANUAL).build());
+                fabricLootSupplierBuilder.withPool(builder1.build()).withPool(builder2.build());
+            }if(!identifier.equals(EMPTY) && identifier.getPath().split("/")[1].equals("village")){
+                FabricLootPoolBuilder builder = FabricLootPoolBuilder.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .withEntry(ItemEntry.builder(Items.CULTIVATION_CRYSTAL_SHARD).build());
+                fabricLootSupplierBuilder.withPool(builder.build());
+            }if(identifier.equals(LIME_SHEEP_ENTITY)){
+                FabricLootPoolBuilder builder = FabricLootPoolBuilder.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .withEntry(ItemEntry.builder(Items.CULTIVATION_CRYSTAL_SHARD).build());
+                fabricLootSupplierBuilder.withPool(builder.build());
             }
         }));
     }

@@ -1,5 +1,8 @@
 package xyz.shurlin.structure;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -24,7 +27,7 @@ public class AncientTreePiece extends SimpleStructurePiece {
     private final AncientTreeFeatureConfig.TreeKind data;
 
     public AncientTreePiece(AncientTreeFeatureConfig.TreeKind data, StructureManager manager, BlockPos pos,  BlockRotation rotation) {
-        super(data.getType(), 0,manager, data.getTemplate(), data.getName(), getData(false, rotation),pos);
+        super(data.getType(), 0,manager, data.getTemplate(), data.getName(), getData(false, rotation), pos);
         this.data = data;
     }
 
@@ -46,6 +49,10 @@ public class AncientTreePiece extends SimpleStructurePiece {
         return (new StructurePlacementData()).setIgnoreEntities(true).addProcessor(blockIgnoreStructureProcessor).setRotation(blockRotation);
     }
 
+    private static StructurePlacementData createPlacementData(BlockRotation rotation, Identifier identifier) {
+        return (new StructurePlacementData()).setRotation(rotation).setMirror(BlockMirror.NONE).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+    }
+
     @Override
     protected void handleMetadata(String metadata, BlockPos pos, ServerWorldAccess serverWorldAccess, Random random, BlockBox boundingBox) {
         if ("leaves_chest".equals(metadata)) {
@@ -57,12 +64,15 @@ public class AncientTreePiece extends SimpleStructurePiece {
 
     @Override
     public boolean generate(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
-        //            int yHeight = serverWorldAccess.getTopY(Heightmap.Type.WORLD_SURFACE_WG, this.pos.getX() + 8, this.pos.getZ() + 8);
-//            this.pos = this.pos.add(0, yHeight - 4, 0);
-        pos = structureWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE_WG, pos).down(4);
-//            if(serverWorldAccess.getBiome(pos) == Biomes.PEAR_FOREST)
-//                serverWorldAccess.setBlockState(pos.add(6,8,8), Blocks.HOLY_PEAR_ALTAR_BLOCK.getDefaultState(),3);
-        return super.generate(structureWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, blockPos);
+        Identifier identifier = new Identifier(this.identifier);
+        StructurePlacementData structurePlacementData = createPlacementData(this.placementData.getRotation(), identifier);
+        int i = structureWorldAccess.getTopY(Heightmap.Type.WORLD_SURFACE_WG, blockPos.getX(), blockPos.getZ());
+//        System.out.println("**");
+//        System.out.println(i);
+//        System.out.println(blockPos);
+//        System.out.println(pos);
+        this.pos.add(0,i,0);
+        return super.generate(structureWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, pos);
     }
 
 //    public static void addPieces(StructureManager structureManager, BlockPos pos, BlockRotation rotation, List<StructurePiece> pieces, Random random, AncientTreeFeatureConfig.TreeKind data) {

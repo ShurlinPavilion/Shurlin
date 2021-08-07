@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cultivation",
+  "pattern": [
+    "gmg",
+    "dcd",
+    "pep"
+  ],
+  "key": {
+    "c": {
+      "item": "shurlin:cultivation_crystal"
+    },
+    "g": {
+      "item": "minecraft:glowstone"
+    },
+    "m": {
+      "item": "shurlin:mysterious_spirit_of_plant"
+    },
+    "d": {
+      "item": "minecraft:deepslate"
+    },
+    "p": {
+      "item": "minecraft:prismarine"
+    },
+    "e": {
+      "item": "minecraft:end_stone"
+    }
+  },
+  "result": {
+    "item": "shurlin:cultivation_crystal"
+  }
+}

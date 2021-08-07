@@ -1,0 +1,21 @@
+{
+  "type": "shurlin:alchemy",
+  "group": "hmp",
+  "ingredients": [
+    {
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:crimson_fungus"
+    },
+    {
+      "item": "shurlin:plant_mixture"
+    }
+  ],
+  "result": {
+    "item": "shurlin:fire_resistance_hmp"
+  }
+}

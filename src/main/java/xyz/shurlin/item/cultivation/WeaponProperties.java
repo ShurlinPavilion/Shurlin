@@ -1,7 +1,9 @@
 package xyz.shurlin.item.cultivation;
 
 public class WeaponProperties {
-    public static final WeaponProperties DARK_IRON = new WeaponProperties(8,2,-2.0f,-2.4f);
+    public static final WeaponProperties DARK_IRON = new WeaponProperties(6,2,-2.0f,-2.4f);
+    public static final WeaponProperties BLUE_ICE = new WeaponProperties(6,2,-2.0f,-2.4f);
+    public static final WeaponProperties MYSTERIOUS_ICE = new WeaponProperties(8,3,-2.0f,-2.4f);
 
     private final int attackWithSpirit;
     private final int attackWithoutSpirit;

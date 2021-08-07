@@ -1,25 +1,38 @@
 package xyz.shurlin.item.cultivation;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import xyz.shurlin.client.option.KeyBindings;
-import xyz.shurlin.cultivation.CultivatedPlayerAccessor;
+import xyz.shurlin.cultivation.accessor.CultivatedPlayerAccessor;
+import xyz.shurlin.cultivation.accessor.MinecraftClientAccessor;
 import xyz.shurlin.cultivation.level.WeaponLevels;
+import xyz.shurlin.cultivation.mixin.MinecraftClientMixin;
+import xyz.shurlin.cultivation.spiritmanual.AbstractSpiritManual;
+import xyz.shurlin.cultivation.spiritmanual.SpiritManuals;
+import xyz.shurlin.cultivation.spiritmanual.WithWeaponSpiritManual;
 import xyz.shurlin.item.ItemGroups;
+import xyz.shurlin.util.Utils;
 
 import java.util.List;
 
-public class BasicWeaponItem extends Item {
+import static xyz.shurlin.util.Utils.USE_SM;
+
+public abstract class BasicWeaponItem extends Item {
     protected WeaponLevels level;
-    boolean withSpirit = false;
+    protected boolean withSpirit;
     protected SpiritConsumeData spiritConsumeData;
 
     public BasicWeaponItem(Settings settings, WeaponLevels level, SpiritConsumeData spiritConsumeData) {
@@ -32,10 +45,6 @@ public class BasicWeaponItem extends Item {
         return level;
     }
 
-    public boolean isWithSpirit() {
-        return withSpirit;
-    }
-
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
@@ -44,18 +53,41 @@ public class BasicWeaponItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if(entity instanceof PlayerEntity){
-            PlayerEntity player = ((PlayerEntity) entity);
-            if(selected && world.isClient)
-                if(KeyBindings.inject_spirit.wasPressed()){
-                    this.withSpirit = !this.withSpirit;
-                    player.swingHand(Hand.MAIN_HAND);
-                }
-            if(withSpirit){
-                if(!consume((CultivatedPlayerAccessor) player, 0))
-                    this.withSpirit = false;
-                if(world.isClient){
-//                    world.addParticle(ParticleTypes.LIGHT, player.getX(), player.getY(), player.getZ(), 0,0,0);
+        if(entity instanceof PlayerEntity && selected){
+            CultivatedPlayerAccessor accessor = (CultivatedPlayerAccessor) entity;
+            if(accessor.getRealm() != null){
+                this.withSpirit = accessor.getSpiritOut();
+                if(this.withSpirit)
+                    if(!consume(accessor, 0))
+                        accessor.changeSpiritOut();
+            }
+        }
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        return TypedActionResult.consume(user.getStackInHand(hand));
+    }
+
+    @Override
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        super.onStoppedUsing(stack, world, user, remainingUseTicks);
+        if(user instanceof PlayerEntity player){
+            CultivatedPlayerAccessor accessor = (CultivatedPlayerAccessor) player;
+            if(accessor.getRealm()!=null){
+                if(consume((CultivatedPlayerAccessor) user, 1)) {
+                    AbstractSpiritManual manual = accessor.getCurrentSpiritManual();
+                    if (manual instanceof WithWeaponSpiritManual withWeaponSpiritManual) {
+                        if (stack.getItem().equals(withWeaponSpiritManual.getRequestItem())) {
+                            withWeaponSpiritManual.use(world, player, stack);
+                            PacketByteBuf byteBuf = PacketByteBufs.create();
+                            byteBuf.writeShort(2);
+                            byteBuf.writeShort(SpiritManuals.getId(withWeaponSpiritManual));
+                            ClientPlayNetworking.send(USE_SM, byteBuf);
+                            ((PlayerEntity) user).getItemCooldownManager().set(stack.getItem(), withWeaponSpiritManual.getCooldown());
+                            ((MinecraftClientAccessor) MinecraftClient.getInstance()).setUsedSpiritManual(withWeaponSpiritManual);
+                        }
+                    }
                 }
             }
         }
@@ -70,6 +102,5 @@ public class BasicWeaponItem extends Item {
             default:
                 return false;
         }
-
     }
 }

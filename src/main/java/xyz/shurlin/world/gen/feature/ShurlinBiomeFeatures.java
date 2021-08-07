@@ -27,7 +27,7 @@ public class ShurlinBiomeFeatures {
         builder.feature(GenerationStep.Feature.SURFACE_STRUCTURES,
                 Features.MYSTERIOUS_STONE_PILLAR_FEATURE
                         .configure(new DefaultFeatureConfig())
-                        .decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100)))
+                        .decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(50)))
         );
     }
 
@@ -35,7 +35,7 @@ public class ShurlinBiomeFeatures {
         builder.feature(GenerationStep.Feature.SURFACE_STRUCTURES,
                 Features.PLANT_OBSIDIAN_HEAP
                         .configure(new DefaultFeatureConfig())
-                        .decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(150)))
+                        .decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(40)))
         );
     }
 

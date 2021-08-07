@@ -36,7 +36,7 @@ public class BrightMoonGoldenLotusItem extends Item {
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         int i = this.getMaxUseTime(stack) - remainingUseTicks;
         float f = BowItem.getPullProgress(i);
-        BrightMoonPollenEntity entity = new BrightMoonPollenEntity(user.getX(),user.getY() + 1,user.getZ(),world);
+        BrightMoonPollenEntity entity = new BrightMoonPollenEntity(user.getX(),user.getEyeY() -0.15D,user.getZ(),world);
         entity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, f * 2.5F, 1.0F);
         world.spawnEntity(entity);
         stack.damage(1, user, (p) -> p.sendToolBreakStatus(user.getActiveHand()));

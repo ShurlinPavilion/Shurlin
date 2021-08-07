@@ -12,8 +12,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import xyz.shurlin.cultivation.CultivatedPlayerAccessor;
+import xyz.shurlin.cultivation.accessor.CultivatedPlayerAccessor;
 import xyz.shurlin.cultivation.level.WeaponLevels;
 
 public class SwordWeaponItem extends BasicWeaponItem {
@@ -34,16 +35,12 @@ public class SwordWeaponItem extends BasicWeaponItem {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        consume((CultivatedPlayerAccessor) user, 1);
-        return super.use(world, user, hand);
-    }
-
-    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if(!this.level.unbreakable())stack.damage(1, attacker, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-        if(attacker instanceof PlayerEntity && withSpirit){
-            consume((CultivatedPlayerAccessor) attacker, 1);
+        if(attacker instanceof PlayerEntity){
+            CultivatedPlayerAccessor accessor = (CultivatedPlayerAccessor) attacker;
+            if(withSpirit)
+                consume(accessor, 1);
         }
         return true;
     }
@@ -71,5 +68,15 @@ public class SwordWeaponItem extends BasicWeaponItem {
                 new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier",
                         properties.getSpeedWithoutSpirit(), EntityAttributeModifier.Operation.ADDITION));
         multimapWithoutSpirit = builder1.build();
+    }
+
+
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
+    }
+
+
+    public int getMaxUseTime(ItemStack stack) {
+        return 72000;
     }
 }

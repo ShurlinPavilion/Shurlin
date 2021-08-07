@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "shurlin:block/cultivation_altar_top",
+    "bottom": "shurlin:block/cultivation_altar_bottom",
+    "side": "shurlin:block/cultivation_altar_side"
+  }
+}

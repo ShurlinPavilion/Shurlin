@@ -1,6 +1,6 @@
 package xyz.shurlin.cultivation.level;
 
-public enum ManualLevel {
+public enum ManualLevel{
     HUANG(1),
     XUAN(2),
     DI(3),
@@ -14,7 +14,7 @@ public enum ManualLevel {
         this.lvl = lvl;
     }
 
-    public int getLvl() {
+    public int getLevel() {
         return lvl;
     }
 }

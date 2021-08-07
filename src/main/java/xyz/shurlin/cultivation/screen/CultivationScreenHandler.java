@@ -1,13 +1,9 @@
 package xyz.shurlin.cultivation.screen;
 
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.util.Identifier;
-import xyz.shurlin.Shurlin;
-import xyz.shurlin.cultivation.CultivatedPlayerAccessor;
+import xyz.shurlin.cultivation.accessor.CultivatedPlayerAccessor;
 import xyz.shurlin.screen.ScreenHandlerTypes;
 
 public class CultivationScreenHandler extends ScreenHandler {

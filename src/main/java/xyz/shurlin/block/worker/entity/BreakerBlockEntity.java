@@ -7,6 +7,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.recipe.RecipeTypes;
 import xyz.shurlin.screen.worker.BreakerScreenHandler;
@@ -23,7 +24,7 @@ public class BreakerBlockEntity extends AbstractWorkerBlockEntity {
 
     @Override
     public ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new BreakerScreenHandler(syncId,this, playerInventory,this.propertyDelegate,world,this);
+        return new BreakerScreenHandler(syncId, this, playerInventory, this.propertyDelegate, world, this);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class BreakerBlockEntity extends AbstractWorkerBlockEntity {
         return new PropertyDelegate() {
             @Override
             public int get(int index) {
-                switch (index){
+                switch (index) {
                     case 0:
                         return BreakerBlockEntity.this.workTime;
                     case 1:
@@ -48,7 +49,7 @@ public class BreakerBlockEntity extends AbstractWorkerBlockEntity {
 
             @Override
             public void set(int index, int value) {
-                switch (index){
+                switch (index) {
                     case 0:
                         BreakerBlockEntity.this.workTime = value;
                     case 1:
@@ -63,23 +64,23 @@ public class BreakerBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    public void tick() {
-        if (this.world != null && !this.world.isClient) {
-            ItemStack input = this.inventory.get(0);
-            if(!input.isEmpty()){
-                Recipe<?> recipe = this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world).orElse(null);
-                if(this.canAcceptRecipeOutput(recipe)){
-                    if(!isWorking() || this.workTimeTotal <= 0)
-                        this.workTimeTotal = this.getWorkTimeTotal();
-                    ++this.workTime;
-                    if(this.workTime == this.workTimeTotal){
-                        this.workTime = 0;
-                        this.craftRecipe(recipe);
+    public static void tick(World world, BlockPos pos, BlockState state, BreakerBlockEntity blockEntity) {
+        if (world != null && !world.isClient) {
+            ItemStack input = blockEntity.inventory.get(0);
+            if (!input.isEmpty()) {
+                Recipe<?> recipe = world.getRecipeManager().getFirstMatch(blockEntity.recipeType, blockEntity, world).orElse(null);
+                if (blockEntity.canAcceptRecipeOutput(recipe)) {
+                    if (!blockEntity.isWorking() || blockEntity.workTimeTotal <= 0)
+                        blockEntity.workTimeTotal = blockEntity.getWorkTimeTotal();
+                    ++blockEntity.workTime;
+                    if (blockEntity.workTime == blockEntity.workTimeTotal) {
+                        blockEntity.workTime = 0;
+                        blockEntity.craftRecipe(recipe);
                     }
                 }
-            }else {
-                this.workTime = 0;
-                this.workTimeTotal = 0;
+            } else {
+                blockEntity.workTime = 0;
+                blockEntity.workTimeTotal = 0;
             }
         }
     }

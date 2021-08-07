@@ -1,8 +1,12 @@
 package xyz.shurlin.item;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -12,7 +16,7 @@ import xyz.shurlin.block.Blocks;
 import xyz.shurlin.cultivation.SpiritConsistences;
 import xyz.shurlin.cultivation.SpiritPropertyType;
 import xyz.shurlin.cultivation.level.WeaponLevels;
-import xyz.shurlin.cultivation.spiritmanual.SpiritManual;
+import xyz.shurlin.cultivation.spiritmanual.AbstractSpiritManual;
 import xyz.shurlin.cultivation.spiritmanual.SpiritManuals;
 import xyz.shurlin.item.cultivation.*;
 
@@ -20,6 +24,7 @@ public class Items {
     public static void load() {
     }
 
+    static final Item.Settings DEFAULT = new Item.Settings().group(ItemGroups.SHURLIN);
     public static final Item PLANT_MIXTURE;
     public static final Item PLANT_MIXTURE_HEAP;
     public static final Item PLANT_ESSENCE_PARTICLE;
@@ -49,21 +54,32 @@ public class Items {
     public static final Item BRIGHT_MOON_POLLEN;
     public static final Item BRIGHT_MOON_GOLDEN_LOTUS;
     public static final Item DANTIAN;
+    public static final Item MYSTERIOUS_ICE_CRYSTAL;
+    public static final Item RAW_BRONZE;
+    public static final Item BRONZE_INGOT;
+
+    public static final Item NIGHT_VISION_HMP;
+    public static final Item POWER_HMP;
+    public static final Item SPIRIT_HMP;
+    public static final Item FIRE_RESISTANCE_HMP;
 
     public static final Item FIREBALL_SPIRIT_MANUAL;
-
-    //    public static final Item TENUOUS_METAL_SPIRIT;
-//    public static final Item TENUOUS_WOOD_SPIRIT;
-//    public static final Item TENUOUS_WATER_SPIRIT;
-//    public static final Item TENUOUS_FIRE_SPIRIT;
-//    public static final Item TENUOUS_EARTH_SPIRIT;
-//    public static final Item TENUOUS_WIND_SPIRIT;
-//    public static final Item TENUOUS_LIGHT_SPIRIT;
-//    public static final Item TENUOUS_DARKNESS_SPIRIT;
-//    public static final Item TENUOUS_POISON_SPIRIT;
-//    public static final Item TENUOUS_LIGHTNING_SPIRIT;
-//    public static final Item TENUOUS_ICE_SPIRIT;
-//    public static final Item TENUOUS_TIME_SPACE_SPIRIT;
+    public static final Item FIREWORK_SPIRIT_MANUAL;
+    public static final Item XUANBING_JIANFA_SPIRIT_MANUAL;
+    //origin
+    public static final Item NORMAL_METAL;
+    public static final Item NORMAL_WOOD;
+    public static final Item NORMAL_WATER;
+    public static final Item NORMAL_FIRE;
+    public static final Item NORMAL_EARTH;
+    public static final Item NORMAL_WIND;
+    public static final Item NORMAL_LIGHT;
+    public static final Item NORMAL_DARKNESS;
+    public static final Item NORMAL_POISON;
+    public static final Item NORMAL_LIGHTNING;
+    public static final Item NORMAL_ICE;
+    public static final Item NORMAL_TIME_SPACE;
+    public static final Item ORIGIN_SOUL_FIRE;
 //    public static final Item COMMON_METAL_SPIRIT;
 //    public static final Item COMMON_WOOD_SPIRIT;
 //    public static final Item COMMON_WATER_SPIRIT;
@@ -97,6 +113,8 @@ public class Items {
 //    public static final Item QUALITY_SPIRIT_CRYSTAL;
 //    public static final Item BEST_SPIRIT_CRYSTAL;
 
+    public static final Item PLANT_IRON_HAMMER;
+    public static final Item PLANT_JADE_LARGE_SWORD;
     public static final BasicToolsItem PLANT_IRON_TOOLS;
     public static final BasicToolsItem PLANT_GOLDEN_TOOLS;
     public static final BasicToolsItem PLANT_JADE_TOOLS;
@@ -107,6 +125,8 @@ public class Items {
 
     //weapon
     public static final Item DARK_IRON_SWORD;
+    public static final Item BLUE_ICE_SWORD;
+    public static final Item MYSTERIOUS_ICE_SWORD;
 
     public static final Item PLANT_IRON_ORE_BLOCK;
     public static final Item DEEPSLATE_PLANT_IRON_ORE_BLOCK;
@@ -147,7 +167,7 @@ public class Items {
     public static final Item DEAD_LEAVE_CORAL_BLOCK_BLOCK;
     public static final Item LEAVE_CORAL_BLOCK_BLOCK;
 
-    //    public static final Item TENUOUS_METAL_SPIRIT_ORE_BLOCK;
+    //    public static final Item NORMAL_METAL_SPIRIT_ORE_BLOCK;
 //    public static final Item TENUOUS_WOOD_SPIRIT_ORE_BLOCK;
 //    public static final Item TENUOUS_WATER_SPIRIT_ORE_BLOCK;
 //    public static final Item TENUOUS_FIRE_SPIRIT_ORE_BLOCK;
@@ -168,6 +188,9 @@ public class Items {
 
     public static final Item CULTIVATION_CRYSTAL_SHARD;
     public static final Item CULTIVATION_CRYSTAL;
+    public static final Item ALCHEMY_FURNACE_BLOCK;
+    public static final Item WEAPON_FORGING_TABLE_BLOCK;
+    public static final Item ITEM_DISPLAY_STAND;
 
 
     private static String getBlockId(Block block){
@@ -183,10 +206,10 @@ public class Items {
     }
 
     private static Item registerSpirit(String registryName, SpiritPropertyType type, long consistence) {
-        return register(registryName, new SpiritItem(type, consistence));
+        return register(registryName, new AbsorbableSpiritItem(type, consistence));
     }
 
-    private static Item registerSpiritManual(String registryName, SpiritManual spiritManual) {
+    private static Item registerSpiritManual(String registryName, AbstractSpiritManual spiritManual) {
         return register(registryName, new SpiritManualItem(spiritManual));
     }
 
@@ -204,6 +227,14 @@ public class Items {
 
     private static Item register(String registryName){
         return register(registryName, new BasicItem());
+    }
+
+    private static Item registerHMP(String registryName, StatusEffect statusEffect, int second){
+        return register(registryName, new HerbalMedicinalPelletItem(new StatusEffectInstance(statusEffect, second * 20)));
+    }
+    
+    private static Item registerOI(String registryName, SpiritPropertyType type ){
+        return register(registryName, new OriginSpiritItem(type));
     }
 
     static {
@@ -236,21 +267,33 @@ public class Items {
         BRIGHT_MOON_POLLEN = registerItemWithoutGroup("bright_moon_pollen");
         BRIGHT_MOON_GOLDEN_LOTUS = register("bright_moon_golden_lotus" , new BrightMoonGoldenLotusItem());
         DANTIAN = register("dantian" , new DantianItem());
+        MYSTERIOUS_ICE_CRYSTAL = register("mysterious_ice_crystal");
+        RAW_BRONZE = register("raw_bronze", DEFAULT.fireproof());
+        BRONZE_INGOT = register("bronze_ingot", DEFAULT.fireproof());
+
+        NIGHT_VISION_HMP = registerHMP("night_vision_hmp", StatusEffects.NIGHT_VISION, 30);
+        POWER_HMP = registerHMP("power_hmp", StatusEffects.STRENGTH, 30);
+        SPIRIT_HMP = registerHMP("spirit_hmp", StatusEffects.HASTE, 30);
+        FIRE_RESISTANCE_HMP = registerHMP("fire_resistance_hmp", StatusEffects.FIRE_RESISTANCE, 30);
+
         FIREBALL_SPIRIT_MANUAL = registerSpiritManual("fireball_spirit_manual", SpiritManuals.FIREBALL);
+        FIREWORK_SPIRIT_MANUAL = registerSpiritManual("firework_spirit_manual", SpiritManuals.FIREWORK);
+        XUANBING_JIANFA_SPIRIT_MANUAL = registerSpiritManual("xuanbing_jianfa_manual", SpiritManuals.XUANBING_JIANFA);
 
 
-//        TENUOUS_METAL_SPIRIT = registerSpirit("tenuous_metal_spirit", SpiritPropertyType.METAL, SpiritConsistences.TENUOUS);
-//        TENUOUS_WOOD_SPIRIT = registerSpirit("tenuous_wood_spirit", SpiritPropertyType.WOOD, SpiritConsistences.TENUOUS);
-//        TENUOUS_WATER_SPIRIT = registerSpirit("tenuous_water_spirit", SpiritPropertyType.WATER, SpiritConsistences.TENUOUS);
-//        TENUOUS_FIRE_SPIRIT = registerSpirit("tenuous_fire_spirit", SpiritPropertyType.FIRE, SpiritConsistences.TENUOUS);
-//        TENUOUS_EARTH_SPIRIT = registerSpirit("tenuous_earth_spirit", SpiritPropertyType.EARTH, SpiritConsistences.TENUOUS);
-//        TENUOUS_WIND_SPIRIT = registerSpirit("tenuous_wind_spirit", SpiritPropertyType.WIND, SpiritConsistences.TENUOUS);
-//        TENUOUS_LIGHT_SPIRIT = registerSpirit("tenuous_light_spirit", SpiritPropertyType.LIGHT, SpiritConsistences.TENUOUS);
-//        TENUOUS_DARKNESS_SPIRIT = registerSpirit("tenuous_darkness_spirit", SpiritPropertyType.DARKNESS, SpiritConsistences.TENUOUS);
-//        TENUOUS_POISON_SPIRIT = registerSpirit("tenuous_poison_spirit", SpiritPropertyType.POISON, SpiritConsistences.TENUOUS);
-//        TENUOUS_LIGHTNING_SPIRIT = registerSpirit("tenuous_lightning_spirit", SpiritPropertyType.LIGHTNING, SpiritConsistences.TENUOUS);
-//        TENUOUS_ICE_SPIRIT = registerSpirit("tenuous_ice_spirit", SpiritPropertyType.ICE, SpiritConsistences.TENUOUS);
-//        TENUOUS_TIME_SPACE_SPIRIT = registerSpirit("tenuous_time_space_spirit", SpiritPropertyType.TIME_SPACE, SpiritConsistences.TENUOUS);
+        NORMAL_METAL = registerOI("normal_metal", SpiritPropertyType.METAL);
+        NORMAL_WOOD = registerOI("normal_wood", SpiritPropertyType.WOOD);
+        NORMAL_WATER = registerOI("normal_water", SpiritPropertyType.WATER);
+        NORMAL_FIRE = registerOI("normal_fire", SpiritPropertyType.FIRE);
+        NORMAL_EARTH = registerOI("normal_earth", SpiritPropertyType.EARTH);
+        NORMAL_WIND = registerOI("normal_wind", SpiritPropertyType.WIND);
+        NORMAL_LIGHT = registerOI("normal_light", SpiritPropertyType.LIGHT);
+        NORMAL_DARKNESS = registerOI("normal_darkness", SpiritPropertyType.DARKNESS);
+        NORMAL_POISON = registerOI("normal_poison", SpiritPropertyType.POISON);
+        NORMAL_LIGHTNING = registerOI("normal_lightning", SpiritPropertyType.LIGHTNING);
+        NORMAL_ICE = registerOI("normal_ice", SpiritPropertyType.ICE);
+        NORMAL_TIME_SPACE = registerOI("normal_time_space", SpiritPropertyType.TIME_SPACE);
+        ORIGIN_SOUL_FIRE = registerOI("origin_soul_fire", SpiritPropertyType.FIRE);
 //        COMMON_METAL_SPIRIT = registerSpirit("common_metal_spirit", SpiritPropertyType.METAL, SpiritConsistences.COMMON);
 //        COMMON_WOOD_SPIRIT = registerSpirit("common_wood_spirit", SpiritPropertyType.WOOD, SpiritConsistences.COMMON);
 //        COMMON_WATER_SPIRIT = registerSpirit("common_water_spirit", SpiritPropertyType.WATER, SpiritConsistences.COMMON);
@@ -285,6 +328,8 @@ public class Items {
 //        QUALITY_SPIRIT_CRYSTAL = registerSpirit("quality_spirit_crystal", SpiritPropertyType.NONE, SpiritConsistences.QUALITY_CRYSTAL);
 //        BEST_SPIRIT_CRYSTAL = registerSpirit("best_spirit_crystal", SpiritPropertyType.NONE, SpiritConsistences.BEST_CRYSTAL);
 
+        PLANT_IRON_HAMMER = register("plant_iron_hammer", new HammerItem(ToolMaterials.PLANT_IRON,new Item.Settings().maxDamage(160).group(ItemGroups.SHURLIN)));
+        PLANT_JADE_LARGE_SWORD = register("plant_jade_large_sword", new SwordItem(ToolMaterials.PLANT_JADE,100,100,new Item.Settings().maxDamage(160).group(ItemGroups.SHURLIN)));
         PLANT_IRON_TOOLS = new BasicToolsItem(ToolMaterials.PLANT_IRON, "plant_iron", 1.0f);
         PLANT_GOLDEN_TOOLS = new BasicToolsItem(ToolMaterials.PLANT_GOLD, "plant_golden", 1.0f);
         PLANT_JADE_TOOLS = new BasicToolsItem(ToolMaterials.PLANT_JADE, "plant_jade", 1.5f);
@@ -295,6 +340,8 @@ public class Items {
 
         //weapon
         DARK_IRON_SWORD = register("dark_iron_sword", new SwordWeaponItem(WeaponLevels.INFERIOR_WEAPON, WeaponProperties.DARK_IRON, SpiritConsumeData.SIMPLE));
+        BLUE_ICE_SWORD = register("blue_ice_sword", new SwordWeaponItem(WeaponLevels.INFERIOR_WEAPON, WeaponProperties.BLUE_ICE, SpiritConsumeData.SIMPLE));
+        MYSTERIOUS_ICE_SWORD = register("mysterious_ice_sword", new SwordWeaponItem(WeaponLevels.STANDARD_WEAPON, WeaponProperties.MYSTERIOUS_ICE, SpiritConsumeData.SIMPLE));
 
         PLANT_IRON_ORE_BLOCK = register(Blocks.PLANT_IRON_ORE);
         DEEPSLATE_PLANT_IRON_ORE_BLOCK = register(Blocks.DEEPSLATE_PLANT_IRON_ORE);
@@ -356,7 +403,10 @@ public class Items {
         BUDDING_SPIRIT_CRYSTAL_BASE = register(Blocks.BUDDING_SPIRIT_CRYSTAL_BASE);
 
         CULTIVATION_CRYSTAL_SHARD = register("cultivation_crystal_shard");
-        CULTIVATION_CRYSTAL  = register(Blocks.CULTIVATION_CRYSTAL);
+        CULTIVATION_CRYSTAL = register(Blocks.CULTIVATION_CRYSTAL);
+        ALCHEMY_FURNACE_BLOCK = register(Blocks.ALCHEMY_FURNACE_BLOCK);
+        WEAPON_FORGING_TABLE_BLOCK = register(Blocks.WEAPON_FORGING_TABLE_BLOCK);
+        ITEM_DISPLAY_STAND = register(Blocks.ITEM_DISPLAY_STAND);
     }
 
 }

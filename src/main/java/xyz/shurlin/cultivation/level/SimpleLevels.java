@@ -1,6 +1,6 @@
 package xyz.shurlin.cultivation.level;
 
-public enum SimpleLevels {
+public enum SimpleLevels{
     LOW(1,"","low"),
     MIDDLE(2,"§a","middle"),
     HIGH(3,"§9","high");
@@ -15,7 +15,7 @@ public enum SimpleLevels {
         this.name = name;
     }
 
-    protected int getLevel() {
+    public int getLevel() {
         return level;
     }
 

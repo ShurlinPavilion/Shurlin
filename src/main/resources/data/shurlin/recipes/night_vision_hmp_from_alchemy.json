@@ -1,0 +1,21 @@
+{
+  "type": "shurlin:alchemy",
+  "group": "hmp",
+  "ingredients": [
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "shurlin:plant_mixture"
+    }
+  ],
+  "result": {
+    "item": "shurlin:night_vision_hmp"
+  }
+}

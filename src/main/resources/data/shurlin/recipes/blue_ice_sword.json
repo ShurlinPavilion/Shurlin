@@ -1,0 +1,20 @@
+{
+  "type": "shurlin:weapon_forging",
+  "group": "ice_sword",
+  "pattern": [
+    "  *",
+    " * ",
+    "#  "
+  ],
+  "key": {
+    "*": {
+      "item": "minecraft:blue_ice"
+    },
+    "#": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "shurlin:blue_ice_sword"
+  }
+}

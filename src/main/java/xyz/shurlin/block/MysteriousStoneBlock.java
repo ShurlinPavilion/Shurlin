@@ -29,12 +29,13 @@ public class MysteriousStoneBlock extends Block {
         if(!inHand.getItem().equals(Items.PLANT_JADE))
             return ActionResult.FAIL;
         world.breakBlock(pos, false);
-        if (state.get(TIMES) < 9) Utils.setRandomBlock(world, pos, 4, state.with(TIMES, state.get(TIMES) + 1));
-        else {
-                inHand.decrement(1);
-                ItemStack result = new ItemStack(Items.MYSTERIOUS_SPIRIT_OF_PLANT, world.random.nextInt(2));
-                player.getInventory().insertStack(result);
-            }
+        if (state.get(TIMES) < 9){
+            if(!world.isClient)Utils.setRandomBlock(world, pos, 4, state.with(TIMES, state.get(TIMES) + 1));
+        } else {
+            inHand.decrement(1);
+            ItemStack result = new ItemStack(Items.MYSTERIOUS_SPIRIT_OF_PLANT, world.random.nextInt(2));
+            player.getInventory().insertStack(result);
+        }
 //            ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), result);
 //            world.spawnEntity(entity);
         return ActionResult.SUCCESS;

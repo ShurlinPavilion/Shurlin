@@ -4,12 +4,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.world.World;
 import xyz.shurlin.cultivation.level.ManualLevel;
-import xyz.shurlin.cultivation.spiritmanual.SpiritManual;
+import xyz.shurlin.cultivation.spiritmanual.AbstractSpiritManual;
+import xyz.shurlin.cultivation.spiritmanual.EmptyHandedSpiritManual;
 import xyz.shurlin.cultivation.spiritmanual.SpiritManualType;
 
-public class FireballSM extends SpiritManual {
-    public FireballSM(ManualLevel level, long consume) {
-        super(level, consume, SpiritManualType.ATTACK);
+public class FireballSM extends EmptyHandedSpiritManual {
+
+    public FireballSM(ManualLevel level, long consume, SpiritManualType type, int cooldown) {
+        super(level, consume, type, cooldown);
     }
 
     @Override

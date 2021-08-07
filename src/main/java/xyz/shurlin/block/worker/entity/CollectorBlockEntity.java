@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.recipe.RecipeTypes;
 import xyz.shurlin.screen.worker.CollectorScreenHandler;
@@ -69,28 +70,28 @@ public class CollectorBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    public void tick() {
-        if(this.world != null && !this.world.isClient){
-            ItemStack input = this.inventory.get(0);
+    public static void tick(World world, BlockPos pos, BlockState state, CollectorBlockEntity blockEntity) {
+        if(world != null && !world.isClient){
+            ItemStack input = blockEntity.inventory.get(0);
             if(!input.isEmpty()){
                 Item collection = input.getItem();
                 if(collection instanceof Collectable){
                     Collectable collectable = ((Collectable) collection);
-                    this.consistence = collectable.getConsistence(this.world, this.pos);
-                    if(!isWorking() || this.workTimeTotal <= 0)
-                        this.workTimeTotal = collectable.getTime();
-                    if(getCollected()){
-                        ++this.workTime;
-                        if(this.workTime == this.workTimeTotal){
-                            this.workTime = 0;
-                            this.craftRecipe();
+                    blockEntity.consistence = collectable.getConsistence(world, blockEntity.pos);
+                    if(!blockEntity.isWorking() || blockEntity.workTimeTotal <= 0)
+                        blockEntity.workTimeTotal = collectable.getTime();
+                    if(blockEntity.getCollected()){
+                        ++blockEntity.workTime;
+                        if(blockEntity.workTime == blockEntity.workTimeTotal){
+                            blockEntity.workTime = 0;
+                            blockEntity.craftRecipe();
                         }
                     }
                 }
             }else{
-                this.workTime = 0;
-                this.workTimeTotal = 0;
-                this.consistence = 0;
+                blockEntity.workTime = 0;
+                blockEntity.workTimeTotal = 0;
+                blockEntity.consistence = 0;
             }
         }
     }

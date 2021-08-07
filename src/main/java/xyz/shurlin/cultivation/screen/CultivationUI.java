@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import xyz.shurlin.Shurlin;
-import xyz.shurlin.cultivation.CultivatedPlayerAccessor;
+import xyz.shurlin.cultivation.accessor.CultivatedPlayerAccessor;
 
 public class CultivationUI implements NamedScreenHandlerFactory {
     public static final Identifier OPEN_CUL = new Identifier(Shurlin.MODID, "key_open_cul");

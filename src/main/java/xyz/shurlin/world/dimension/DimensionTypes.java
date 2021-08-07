@@ -8,6 +8,7 @@ import xyz.shurlin.Shurlin;
 
 public class DimensionTypes {
     public static final RegistryKey<DimensionType> HOLY_FARMER;
+    public static final RegistryKey<DimensionType> ICE_SPIRIT_WORLD;
 //    public static final RegistryKey<DimensionType> SHURLIN;
 
     private static RegistryKey<DimensionType> register(String name){
@@ -19,6 +20,7 @@ public class DimensionTypes {
 
     static {
         HOLY_FARMER = register("holy_farmer_type");
+        ICE_SPIRIT_WORLD = register("ice_spirit_world_type");
 //        SHURLIN = register("shurlin");
     }
 }

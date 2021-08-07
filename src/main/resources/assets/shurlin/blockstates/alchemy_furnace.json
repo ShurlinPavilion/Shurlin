@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "state0=0": { "model": "shurlin:block/alchemy_furnace_uncovered" },
+        "state0=1": { "model": "shurlin:block/alchemy_furnace_unlit" },
+        "state0=2": { "model": "shurlin:block/alchemy_furnace_litting" }
+    }
+}

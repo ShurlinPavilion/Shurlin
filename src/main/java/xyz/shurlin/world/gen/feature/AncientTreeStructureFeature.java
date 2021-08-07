@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.HeightLimitView;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
@@ -55,7 +56,7 @@ public class AncientTreeStructureFeature extends StructureFeature<AncientTreeFea
 
         @Override
         public void init(DynamicRegistryManager registryManager, ChunkGenerator chunkGenerator, StructureManager manager, ChunkPos chunkPos, Biome biome, AncientTreeFeatureConfig featureConfig, HeightLimitView heightLimitView) {
-            BlockPos blockPos = new BlockPos(chunkPos.getStartX(), 90, chunkPos.getStartZ());
+            BlockPos blockPos = new BlockPos(chunkPos.getStartX(), 0, chunkPos.getStartZ());
             BlockRotation blockRotation = BlockRotation.random(this.random);
 //            AncientTreePiece.addPieces(manager, blockPos, blockRotation, list, this.random, );
             this.addPiece(new AncientTreePiece(featureConfig.treeKind, manager, blockPos, blockRotation));

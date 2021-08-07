@@ -58,9 +58,7 @@ public abstract class BasicBlockEntity extends LockableContainerBlockEntity {
     }
 
     @Override
-    public int size() {
-        return this.inventory.size();
-    }
+    public abstract int size();
 
     @Override
     public boolean isEmpty() {

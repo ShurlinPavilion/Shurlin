@@ -1,11 +1,16 @@
 package xyz.shurlin.block.worker.entity;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.recipe.ConcentratorRecipe;
 import xyz.shurlin.recipe.RecipeTypes;
@@ -63,21 +68,21 @@ public class ConcentratorBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    public void tick() {
-        if(this.world != null && !this.world.isClient){
-            if(!this.inventory.get(0).isEmpty()){
-                ConcentratorRecipe recipe = (ConcentratorRecipe) this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world).orElse(null);
-                if(this.canAcceptRecipeOutput(recipe)){
-                    if(!isWorking() || this.workTimeTotal <= 0)
-                        this.workTimeTotal = this.getWorkTimeTotal();
-                    ++this.workTime;
-                    if(this.workTime == this.workTimeTotal){
-                        this.workTime = 0;
-                        this.craftRecipe(recipe);
+    public static void tick(World world, BlockPos pos, BlockState state, ConcentratorBlockEntity blockEntity) {
+        if(world != null && !world.isClient){
+            if(!blockEntity.inventory.get(0).isEmpty()){
+                ConcentratorRecipe recipe = (ConcentratorRecipe) world.getRecipeManager().getFirstMatch(blockEntity.recipeType, blockEntity, blockEntity.world).orElse(null);
+                if(blockEntity.canAcceptRecipeOutput(recipe)){
+                    if(!blockEntity.isWorking() || blockEntity.workTimeTotal <= 0)
+                        blockEntity.workTimeTotal = blockEntity.getWorkTimeTotal();
+                    ++blockEntity.workTime;
+                    if(blockEntity.workTime == blockEntity.workTimeTotal){
+                        blockEntity.workTime = 0;
+                        blockEntity.craftRecipe(recipe);
                     }
                 }else {
-                    this.workTime = 0;
-                    this.workTimeTotal = 0;
+                    blockEntity.workTime = 0;
+                    blockEntity.workTimeTotal = 0;
                 }
             }
         }

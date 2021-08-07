@@ -11,7 +11,8 @@ public class RecipeTypes {
     public static final RecipeType<CollectorRecipe> COLLECTING = register("collecting");
     public static final RecipeType<ConcentratorRecipe> CONCENTRATING = register("concentrating");
     public static final RecipeType<ExtractorRecipe> EXTRACTING = register("extracting");
-    public static final RecipeType<HMPRecipe> ALCHEMY = register("alchemy");
+    public static final RecipeType<AlchemyRecipe> ALCHEMY = register("alchemy");
+    public static final RecipeType<WeaponForgingTableRecipe> WEAPON_FORGING = register("weapon_forging");
 //    public static final RecipeType<WorkerRecipe> PURIFYING = register("purifying");
 //    public static final RecipeType<WorkerRecipe> SPIRIT_RAISING = register("spirit_raising");
 

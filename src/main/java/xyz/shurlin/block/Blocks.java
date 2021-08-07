@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.shape.VoxelShape;
 import xyz.shurlin.Shurlin;
 import xyz.shurlin.block.coral.*;
 import xyz.shurlin.block.plant.BasicSaplingBlock;
@@ -45,7 +46,10 @@ public class Blocks {
     public static final Block PLANT_OBSIDIAN;
     public static final Block HOLY_FARMER_PORTAL;
     public static final Block CULTIVATION_CRYSTAL;
+    public static final Block CULTIVATION_ALTAR;
     public static final Block ALCHEMY_FURNACE_BLOCK;
+    public static final Block WEAPON_FORGING_TABLE_BLOCK;
+    public static final Block ITEM_DISPLAY_STAND;
     public static final Block BRIGHT_MOON_POLLEN;
 
     public static final Block PEAR_SAPLING;
@@ -125,8 +129,11 @@ public class Blocks {
         MYSTERIOUS_STONE = register("mysterious_stone", new MysteriousStoneBlock(FabricBlockSettings.of(Material.STONE).strength(-1, 3600)));
         PLANT_OBSIDIAN = register("plant_obsidian", BlockSettings.OBSIDIAN);
         HOLY_FARMER_PORTAL = register("holy_farmer_portal", new HolyFarmerPortalBlock(FabricBlockSettings.of(Material.PORTAL).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS).lightLevel(12)));
-        CULTIVATION_CRYSTAL = register("cultivation_crystal", new CultivationCrystalBlock(FabricBlockSettings.of(Material.GLASS).strength(-1).nonOpaque()));
-        ALCHEMY_FURNACE_BLOCK = register("alchemy_furnace_block", BlockSettings.LLANDUDNO);
+        CULTIVATION_CRYSTAL = register("cultivation_crystal", new CultivationCrystalBlock(FabricBlockSettings.of(Material.GLASS).strength(0).nonOpaque()));
+        CULTIVATION_ALTAR = register("cultivation_altar", new CultivationAltarBlock(BlockSettings.STONE));
+        ALCHEMY_FURNACE_BLOCK = register("alchemy_furnace", new AlchemyFurnaceBlock(BlockSettings.LLANDUDNO));
+        WEAPON_FORGING_TABLE_BLOCK = register("weapon_forging_table", new WeaponForgingTableBlock(BlockSettings.LLANDUDNO));
+        ITEM_DISPLAY_STAND = register("item_display_stand", new ItemDisplayStandBlock(BlockSettings.PLANKS));
         BRIGHT_MOON_POLLEN = register("bright_moon_pollen", new BrightMoonPollenBlock(BlockSettings.POLLEN));
 
         DEAD_LEAVE_CORAL = register("dead_leave_coral",new DeadLeaveCoralBlock(BlockSettings.DEAD_CORAL));
@@ -182,7 +189,7 @@ public class Blocks {
             WORKER = FabricBlockSettings.of(Material.STONE).strength(10.0f, 10.0f);
             STONE = FabricBlockSettings.of(Material.STONE, MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F);
             DIRT = FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(0.5F).sounds(BlockSoundGroup.GRAVEL);
-            LLANDUDNO = FabricBlockSettings.of(Material.METAL).strength(20.0f, 100.0f).requiresTool().sounds(BlockSoundGroup.METAL);
+            LLANDUDNO = FabricBlockSettings.of(Material.METAL).strength(20.0f, 100.0f).sounds(BlockSoundGroup.METAL);
             POLLEN = FabricBlockSettings.of(Material.PLANT).breakInstantly().dropsNothing().nonOpaque().luminance(15);
         }
 

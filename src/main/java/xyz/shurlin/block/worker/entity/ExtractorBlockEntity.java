@@ -1,6 +1,7 @@
 package xyz.shurlin.block.worker.entity;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.sound.TickableSoundInstance;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,6 +10,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.item.ExtractantItem;
 import xyz.shurlin.recipe.RecipeTypes;
@@ -76,34 +78,33 @@ public class ExtractorBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    public void tick() {
-        if (this.world != null && !this.world.isClient) {
-            ItemStack input = this.inventory.get(0);
-            ItemStack extractantStack = this.inventory.get(1);
-            if(this.cur_extractant == 0 && !extractantStack.isEmpty()){
+    public static void tick(World world, BlockPos pos, BlockState state, ExtractorBlockEntity blockEntity) {
+        if (world != null && !world.isClient) {
+            ItemStack input = blockEntity.inventory.get(0);
+            ItemStack extractantStack = blockEntity.inventory.get(1);
+            if(blockEntity.cur_extractant == 0 && !extractantStack.isEmpty()){
                 Item extractant = extractantStack.getItem();
-                if(extractant instanceof ExtractantItem){
-                    ExtractantItem extractantItem = (ExtractantItem) extractant;
-                    this.extractant = extractantItem.getExtractant();
-                    this.cur_extractant = this.extractant;
+                if(extractant instanceof ExtractantItem extractantItem){
+                    blockEntity.extractant = extractantItem.getExtractant();
+                    blockEntity.cur_extractant = blockEntity.extractant;
                     extractantStack.decrement(1);
                 }
             }
             if(!input.isEmpty()){
-                Recipe<?> recipe = this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world).orElse(null);
-                if(this.canAcceptRecipeOutput(recipe) && this.cur_extractant > 0){
-                    if(!isWorking() || this.workTimeTotal <= 0)
-                        this.workTimeTotal = this.getWorkTimeTotal();
-                    ++this.workTime;
-                    if(this.workTime == this.workTimeTotal){
-                        this.workTime = 0;
-                        --this.cur_extractant;
-                        this.craftRecipe(recipe);
+                Recipe<?> recipe = world.getRecipeManager().getFirstMatch(blockEntity.recipeType, blockEntity, world).orElse(null);
+                if(blockEntity.canAcceptRecipeOutput(recipe) && blockEntity.cur_extractant > 0){
+                    if(!blockEntity.isWorking() || blockEntity.workTimeTotal <= 0)
+                        blockEntity.workTimeTotal = blockEntity.getWorkTimeTotal();
+                    ++blockEntity.workTime;
+                    if(blockEntity.workTime == blockEntity.workTimeTotal){
+                        blockEntity.workTime = 0;
+                        --blockEntity.cur_extractant;
+                        blockEntity.craftRecipe(recipe);
                     }
                 }
             }else {
-                this.workTime = 0;
-                this.workTimeTotal = 0;
+                blockEntity.workTime = 0;
+                blockEntity.workTimeTotal = 0;
             }
         }
     }
