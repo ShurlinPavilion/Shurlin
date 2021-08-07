@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 public enum SpiritPropertyType {
+    NONE("none", 0),
     METAL("metal", 1),
     WOOD("wood", 2),
     WATER("water", 3),

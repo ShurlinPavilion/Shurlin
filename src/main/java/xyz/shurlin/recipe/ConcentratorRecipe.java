@@ -7,7 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.tag.ServerTagManagerHolder;
@@ -104,35 +104,35 @@ public class ConcentratorRecipe extends AbstractWorkerRecipe {
     public static class ConcentrationIngredientVector extends Vector<ConcentrationIngredient>{
         private void write(PacketByteBuf buf){
             buf.writeVarInt(this.size());
-            CompoundTag tags = new CompoundTag();
+            NbtCompound tags = new NbtCompound();
             int index = 0;
             for(ConcentrationIngredient ingredient : this){
-                CompoundTag tag = new CompoundTag();
+                NbtCompound tag = new NbtCompound();
                 ItemOrTag itemOrTag = ingredient.itemOrTag;
                 boolean b = itemOrTag.isItem();
-                String id = b?itemOrTag.getItem().getTranslationKey():ServerTagManagerHolder.getTagManager().getItems().getTagId(itemOrTag.getTag()).toString();
+                String id = b?itemOrTag.getItem().getTranslationKey(): ServerTagManagerHolder.getTagManager().getTagId(Registry.ITEM_KEY, itemOrTag.getTag(), () -> new IllegalStateException("Unknown item tag")).toString();
                 tag.putBoolean("isItem", b);
                 tag.putString("id", id);
                 tag.putInt("count", ingredient.count);
                 tags.put("tag" + ++index, tag);
             }
-            buf.writeCompoundTag(tags);
+            buf.writeNbt(tags);
         }
 
         private static ConcentrationIngredientVector fromPacket(PacketByteBuf buf){
             int size = buf.readVarInt();
-            CompoundTag tags = buf.readCompoundTag();
+            NbtCompound tags = buf.readNbt();
             ConcentrationIngredientVector concentrationIngredients = new ConcentrationIngredientVector();
             for(int i=1;i<=size;i++){
                 if (tags != null) {
-                    CompoundTag tag = tags.getCompound("tag"+i);
+                    NbtCompound tag = tags.getCompound("tag"+i);
                     boolean b = tag.getBoolean("isItem");
                     Identifier id = new Identifier(tag.getString("id"));
                     ItemOrTag itemOrTag;
                     if(b)
                         itemOrTag = new ItemOrTag(Registry.ITEM.get(id));
                     else
-                        itemOrTag = new ItemOrTag(ServerTagManagerHolder.getTagManager().getItems().getTag(id));
+                        itemOrTag = new ItemOrTag(getTag(id));
                     int count = tag.getInt("count");
                     ConcentrationIngredient concentrationIngredient = new ConcentrationIngredient(itemOrTag, count);
                     concentrationIngredients.add(concentrationIngredient);
@@ -164,7 +164,7 @@ public class ConcentratorRecipe extends AbstractWorkerRecipe {
                 itemOrTag = new ItemOrTag(item);
             }else if(object.has("tag")){
                 identifier = new Identifier(JsonHelper.getString(object, "tag"));
-                Tag<Item> tag = ServerTagManagerHolder.getTagManager().getItems().getTag(identifier);
+                Tag<Item> tag = getTag(identifier);
                 if (tag == null) {
                     throw new JsonSyntaxException("Unknown item tag '" + identifier + "'");
                 }
@@ -172,5 +172,9 @@ public class ConcentratorRecipe extends AbstractWorkerRecipe {
             }
             count = JsonHelper.getInt(object, "count", 1);
         }
+
+    }
+    private static Tag<Item> getTag(Identifier id){
+        return ServerTagManagerHolder.getTagManager().getTag(Registry.ITEM_KEY, id, (i) -> new JsonSyntaxException("Unknown item tag '" + i + "'"));
     }
 }

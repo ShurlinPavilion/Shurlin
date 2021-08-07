@@ -1,15 +1,18 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "xyz.shurlin.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "package": "xyz.shurlin.cultivation.mixin",
+  "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "CultivatedPlayerMixin"
   ],
   "client": [
-
+    "MinecraftClientMixin"
+  ],
+  "server": [
+    "PlayerManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "refmap": "shurlin-refmap.json"
+  }
 }

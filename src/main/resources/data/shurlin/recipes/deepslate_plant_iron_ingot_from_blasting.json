@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "shurlin:deepslate_plant_iron_ore"
+  },
+  "result": "shurlin:plant_iron_ingot",
+  "experience": 0.9,
+  "cookingtime": 100
+}

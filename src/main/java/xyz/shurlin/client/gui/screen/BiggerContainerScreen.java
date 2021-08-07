@@ -14,7 +14,7 @@ import xyz.shurlin.screen.BiggerContainerScreenHandler;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public class BiggerContainerScreen extends HandledScreen<BiggerContainerScreenHandler> {
+public class BiggerContainerScreen extends ShurlinScreen<BiggerContainerScreenHandler> {
     private final Identifier TEXTURE = new Identifier(Shurlin.MODID, "textures/gui/bigger_container.png");
 
     public BiggerContainerScreen(BiggerContainerScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -34,8 +34,7 @@ public class BiggerContainerScreen extends HandledScreen<BiggerContainerScreenHa
 
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Objects.requireNonNull(this.client).getTextureManager().bindTexture(TEXTURE);
+        render1(TEXTURE);
         this.drawTexture(matrices, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
     }
 }

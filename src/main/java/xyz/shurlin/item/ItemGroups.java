@@ -16,6 +16,6 @@ public class ItemGroups {
 
     public static final ItemGroup SHURLIN = FabricItemGroupBuilder
             .create(new Identifier(Shurlin.MODID, Shurlin.MODID))
-            .icon(()->new ItemStack(Items.PLANT_ESSENCE))
+            .icon(()->new ItemStack(Items.MYSTERIOUS_SPIRIT_OF_PLANT))
             .build();
 }

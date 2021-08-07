@@ -1,7 +1,8 @@
 package xyz.shurlin.structure;
 
 import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.*;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
 import net.minecraft.util.BlockMirror;
@@ -21,33 +22,28 @@ import java.util.Random;
 
 public class AncientTreePiece extends SimpleStructurePiece {
     private final AncientTreeFeatureConfig.TreeKind data;
-    private final Identifier template;
-    private final BlockRotation rotation;
 
-    private AncientTreePiece(StructurePieceType type, StructureManager manager, BlockPos pos, AncientTreeFeatureConfig.TreeKind data) {
-        super(type, 0);
+    public AncientTreePiece(AncientTreeFeatureConfig.TreeKind data, StructureManager manager, BlockPos pos,  BlockRotation rotation) {
+        super(data.getType(), 0,manager, data.getTemplate(), data.getName(), getData(false, rotation),pos);
         this.data = data;
-        this.template = data.getTemplate();
-        this.rotation = BlockRotation.NONE;
-        this.pos = pos;
-
-        this.initializeStructureData(manager);
     }
 
-    public AncientTreePiece(StructurePieceType type, StructureManager manager, CompoundTag tag) {
-        super(type, tag);
-        this.template = new Identifier(tag.getString("Template"));
-        this.rotation = BlockRotation.NONE;
-        this.data = AncientTreeFeatureConfig.TreeKind.findData(tag.getString("Type"));
-        this.initializeStructureData(manager);
+    public AncientTreePiece(StructurePieceType type, ServerWorld serverWorld, NbtCompound nbtCompound) {
+        super(type, nbtCompound, serverWorld, (identifier) -> getData(nbtCompound.getBoolean("OW"), BlockRotation.valueOf(nbtCompound.getString("Rot"))));
+        this.data = AncientTreeFeatureConfig.TreeKind.findData(nbtCompound.getString("Type"));
     }
 
     @Override
-    protected void toNbt(CompoundTag tag) {
-        super.toNbt(tag);
-        tag.putString("Template", this.template.toString());
-        tag.putString("Rotation", this.rotation.name());
+    protected void writeNbt(ServerWorld world, NbtCompound tag) {
+        super.writeNbt(world, tag);
+        tag.putString("Rot", this.placementData.getRotation().name());
         tag.putString("Type", this.data.getName());
+        tag.putBoolean("OW", this.placementData.getProcessors().get(0) == BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+    }
+
+    private static StructurePlacementData getData(boolean bl, BlockRotation blockRotation) {
+        BlockIgnoreStructureProcessor blockIgnoreStructureProcessor = bl ? BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS : BlockIgnoreStructureProcessor.IGNORE_AIR_AND_STRUCTURE_BLOCKS;
+        return (new StructurePlacementData()).setIgnoreEntities(true).addProcessor(blockIgnoreStructureProcessor).setRotation(blockRotation);
     }
 
     @Override
@@ -69,14 +65,8 @@ public class AncientTreePiece extends SimpleStructurePiece {
         return super.generate(structureWorldAccess, structureAccessor, chunkGenerator, random, boundingBox, chunkPos, blockPos);
     }
 
-    private void initializeStructureData(StructureManager manager) {
-        Structure structure = manager.getStructureOrBlank(this.template);
-        StructurePlacementData structurePlacementData = (new StructurePlacementData()).setRotation(this.rotation).setMirror(BlockMirror.NONE).setPosition(this.pos).addProcessor(BlockIgnoreStructureProcessor.IGNORE_AIR_AND_STRUCTURE_BLOCKS);
-        this.setStructureData(structure, this.pos, structurePlacementData);
-    }
-
-    public static void addPieces(StructureManager manager, BlockPos pos, List<StructurePiece> pieces, AncientTreeFeatureConfig.TreeKind data) {
-        pieces.add(new AncientTreePiece(data.getType(), manager, pos, data));
-    }
+//    public static void addPieces(StructureManager structureManager, BlockPos pos, BlockRotation rotation, List<StructurePiece> pieces, Random random, AncientTreeFeatureConfig.TreeKind data) {
+//        pieces.add(new AncientTreePiece(data.getType(), structureManager, pos, data, rotation));
+//    }
 }
 

@@ -1,5 +1,7 @@
 package xyz.shurlin.block.worker;
 
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +11,7 @@ import xyz.shurlin.block.worker.entity.CollectorBlockEntity;
 import xyz.shurlin.util.Stats;
 
 public class CollectorBlock extends AbstractWorkerBlock {
-    public CollectorBlock(Settings settings) {
+    public CollectorBlock(AbstractBlock.Settings settings) {
         super(settings);
     }
 
@@ -23,7 +25,7 @@ public class CollectorBlock extends AbstractWorkerBlock {
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new CollectorBlockEntity(level);
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CollectorBlockEntity(level, pos , state);
     }
 }

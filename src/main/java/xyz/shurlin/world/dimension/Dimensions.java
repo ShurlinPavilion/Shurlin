@@ -11,7 +11,7 @@ public class Dimensions {
 //    public static final RegistryKey<World> SHURLIN_;
 
     private static RegistryKey<World> register(String name){
-        return RegistryKey.of(Registry.DIMENSION, new Identifier(Shurlin.MODID, name));
+        return RegistryKey.of(Registry.WORLD_KEY, new Identifier(Shurlin.MODID, name));
     }
 
     public static void load() {

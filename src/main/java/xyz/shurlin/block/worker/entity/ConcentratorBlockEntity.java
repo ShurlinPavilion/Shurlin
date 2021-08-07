@@ -1,9 +1,11 @@
 package xyz.shurlin.block.worker.entity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.math.BlockPos;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.recipe.ConcentratorRecipe;
 import xyz.shurlin.recipe.RecipeTypes;
@@ -11,12 +13,12 @@ import xyz.shurlin.screen.worker.ConcentratorScreenHandler;
 
 public class ConcentratorBlockEntity extends AbstractWorkerBlockEntity {
 
-    public ConcentratorBlockEntity(int level) {
-        super(BlockEntityTypes.CONCENTRATOR_BLOCK_ENTITY, "concentrator", level, RecipeTypes.CONCENTRATING);
+    public ConcentratorBlockEntity(int level, BlockPos blockPos, BlockState blockState) {
+        super(BlockEntityTypes.CONCENTRATOR_BLOCK_ENTITY, blockPos, blockState, "concentrator", level, RecipeTypes.CONCENTRATING);
     }
 
-    public ConcentratorBlockEntity(){
-        this(0);
+    public ConcentratorBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(BlockEntityTypes.CONCENTRATOR_BLOCK_ENTITY, blockPos, blockState, "concentrator", 1, RecipeTypes.CONCENTRATING);
     }
 
     @Override
@@ -61,7 +63,6 @@ public class ConcentratorBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    @Override
     public void tick() {
         if(this.world != null && !this.world.isClient){
             if(!this.inventory.get(0).isEmpty()){

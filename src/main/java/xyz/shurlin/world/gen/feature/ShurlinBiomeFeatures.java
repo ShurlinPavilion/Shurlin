@@ -55,10 +55,10 @@ public class ShurlinBiomeFeatures {
         builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, ShurlinConfiguredFeatures.PLATYCODON_GRANDIFLORUS);
     }
 
-    public static void addBlock(Builder builder, Block block, int tries) {
-        builder.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-                Feature.RANDOM_PATCH.configure(getConfig(block.getDefaultState(), tries)).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP));
-    }
+//    public static void addBlock(Builder builder, Block block, int tries) {
+//        builder.feature(GenerationStep.Feature.VEGETAL_DECORATION,
+//                Feature.RANDOM_PATCH.configure(getConfig(block.getDefaultState(), tries)).decorate(ConfiguredFeatures.FLOWER_PLAIN_DECORATED.SQUARE_HEIGHTMAP));
+//    }
 
     private static RandomPatchFeatureConfig getConfig(BlockState state, int tries){
         return (new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(state), SimpleBlockPlacer.INSTANCE)).tries(32).build();

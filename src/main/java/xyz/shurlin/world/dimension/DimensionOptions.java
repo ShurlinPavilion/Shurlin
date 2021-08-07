@@ -10,7 +10,7 @@ public class DimensionOptions {
 //    public static final RegistryKey<net.minecraft.world.dimension.DimensionOptions> SHURLIN;
 
     private static RegistryKey<net.minecraft.world.dimension.DimensionOptions> register(String name){
-        return RegistryKey.of(Registry.DIMENSION_OPTIONS, new Identifier(Shurlin.MODID, name));
+        return RegistryKey.of(Registry.DIMENSION_KEY, new Identifier(Shurlin.MODID, name));
     }
 
     static {

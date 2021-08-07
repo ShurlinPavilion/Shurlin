@@ -17,6 +17,9 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
 public class HolyFarmerChunkGenerator extends ChunkGenerator {
     protected final boolean customBool;
 
@@ -51,18 +54,18 @@ public class HolyFarmerChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void populateNoise(WorldAccess world, StructureAccessor accessor, Chunk chunk) {
-
+    public CompletableFuture<Chunk> populateNoise(Executor executor, StructureAccessor accessor, Chunk chunk) {
+        return null;
     }
 
     @Override
-    public int getHeight(int x, int z, Heightmap.Type heightmapType) {
+    public int getHeight(int x, int z, Heightmap.Type heightmap, HeightLimitView world) {
         return 0;
     }
 
     @Override
-    public BlockView getColumnSample(int x, int z) {
-        return new VerticalBlockSample(new BlockState[0]);
+    public VerticalBlockSample getColumnSample(int x, int z, HeightLimitView world) {
+        return new VerticalBlockSample(0,new BlockState[0]);//TODO
     }
 
 

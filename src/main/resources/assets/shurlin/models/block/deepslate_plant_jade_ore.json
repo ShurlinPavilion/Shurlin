@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "shurlin:block/deepslate_plant_jade_ore"
+  }
+}

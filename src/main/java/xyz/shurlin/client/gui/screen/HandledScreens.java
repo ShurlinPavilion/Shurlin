@@ -3,6 +3,7 @@ package xyz.shurlin.client.gui.screen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.minecraft.client.gui.screen.SleepingChatScreen;
 import xyz.shurlin.client.gui.screen.worker.BreakerScreen;
 import xyz.shurlin.client.gui.screen.worker.CollectorScreen;
 import xyz.shurlin.client.gui.screen.worker.ConcentratorScreen;

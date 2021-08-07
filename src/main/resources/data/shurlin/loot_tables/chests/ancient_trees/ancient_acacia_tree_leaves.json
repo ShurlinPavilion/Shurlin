@@ -105,13 +105,18 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 2,
           "name": "shurlin:plant_jade"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 4,
           "name": "shurlin:plant_extractant"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "shurlin:starry_stone"
         }
       ]
     }

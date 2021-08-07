@@ -4,12 +4,14 @@ import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.shurlin.block.entity.BlockEntityTypes;
-import xyz.shurlin.command.Commands;
+import xyz.shurlin.cultivation.spiritmanual.SpiritManuals;
+import xyz.shurlin.entity.EntityTypes;
 import xyz.shurlin.item.Items;
-import xyz.shurlin.linkage.Linkage;
+import xyz.shurlin.loot.LootTables;
 import xyz.shurlin.recipe.RecipeSerializers;
 import xyz.shurlin.screen.ScreenHandlerTypes;
-import xyz.shurlin.util.ServerReceiver;
+import xyz.shurlin.network.ClientReceiver;
+import xyz.shurlin.network.ServerReceiver;
 import xyz.shurlin.world.biome.BiomeGenerator;
 import xyz.shurlin.world.biome.Biomes;
 import xyz.shurlin.world.dimension.DimensionTypes;
@@ -29,7 +31,7 @@ public class Shurlin implements ModInitializer {
         BlockEntityTypes.load();
         Items.load();
 //        new Features();
-
+        SpiritManuals.load();
         RecipeSerializers.load();
         ServerReceiver.load();
         ScreenHandlerTypes.load();
@@ -37,15 +39,16 @@ public class Shurlin implements ModInitializer {
         Dimensions.load();
         DimensionTypes.load();
 //        KeyBindings.load();
-        Commands.load();
         Biomes.load();
         BiomeGenerator.load();
         ShurlinOreFeatures.load();
+        LootTables.load();
+        EntityTypes.registerAll();
 //        new Reflector();
 //        new DimensionOptions();
 //        StructureKeys.registerAll();
 //        FeatureKeys.registerAll();
-        Linkage.init();
+//        Linkage.init();
     }
 }
 

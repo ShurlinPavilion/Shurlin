@@ -6,43 +6,44 @@ import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 
 public abstract class BasicBlockEntity extends LockableContainerBlockEntity {
     protected DefaultedList<ItemStack> inventory;
     private final String containerName;
 
-    public BasicBlockEntity(BlockEntityType<?> type, String containerName) {
-        super(type);
-        this.containerName = containerName;
+    public BasicBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, String containerName) {
+        super(blockEntityType, blockPos, blockState);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+        this.containerName = containerName;
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
         this.deserializeInventory(tag);
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
         return this.serializeInventory(tag);
     }
 
-    private void deserializeInventory(CompoundTag tag) {
+    private void deserializeInventory(NbtCompound tag) {
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         if (tag.contains("Items", 9)) {
-            Inventories.fromTag(tag, this.inventory);
+            Inventories.readNbt(tag, this.inventory);
         }
 
     }
 
-    private CompoundTag serializeInventory(CompoundTag tag) {
-        Inventories.toTag(tag, this.inventory);
+    private NbtCompound serializeInventory(NbtCompound tag) {
+        Inventories.writeNbt(tag, this.inventory);
         return tag;
     }
 

@@ -1,5 +1,6 @@
 package xyz.shurlin.world.gen.feature;
 
+import com.google.common.collect.ImmutableList;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -10,40 +11,33 @@ import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.structure.rule.TagMatchRuleTest;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import xyz.shurlin.Shurlin;
 
 import java.util.function.Predicate;
 
-public class ShurlinOreFeatures {
+public class ShurlinOreFeatures{
     public static void load() {
     }
 
+    public static final ImmutableList<OreFeatureConfig.Target> INFERIOR_SPIRIT_STONE_ORE_TARGETS;
+    public static final ImmutableList<OreFeatureConfig.Target> PLANT_IRON_ORE_TARGETS;
+    public static final ImmutableList<OreFeatureConfig.Target> PLANT_GOLD_ORE_TARGETS;
+    public static final ImmutableList<OreFeatureConfig.Target> PLANT_JADE_ORE_TARGETS;
     public static final ConfiguredFeature<?, ?> ORE_PLANT_IRON;
     public static final ConfiguredFeature<?, ?> ORE_PLANT_GOLD;
     public static final ConfiguredFeature<?, ?> ORE_PLANT_JADE;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_METAL_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_WOOD_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_WATER_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_FIRE_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_EARTH_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_WIND_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_LIGHT_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_DARKNESS_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_POISON_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_LIGHTNING_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_ICE_SPIRIT;
-    public static final ConfiguredFeature<?, ?> ORE_TENUOUS_TIME_SPACE_SPIRIT;
+    public static final ConfiguredFeature<?, ?> ORE_INFERIOR_SPIRIT_STONE;
+    public static final ConfiguredFeature<?, ?> ORE_INFERIOR_SPIRIT_CRYSTAL;
+    public static final ConfiguredFeature<?, ?> ORE_STANDARD_SPIRIT_STONE;
 
     private static ConfiguredFeature<?, ?> createOre(String registryName, BlockState state, int size, int numPerChunk, int maxy) {
         return createOre(registryName, OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, state, size, numPerChunk, maxy, BiomeSelectors.foundInOverworld());
@@ -62,34 +56,31 @@ public class ShurlinOreFeatures {
     }
 
     private static ConfiguredFeature<?, ?> createOre(String registryName, RuleTest ruleTest, BlockState state, int size, int numPerChunk, int topOffset, int maxy, Predicate<BiomeSelectionContext> selectors) {
-        RegistryKey key = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, new Identifier(Shurlin.MODID, registryName));
-        ConfiguredFeature<?, ?> ore = Feature.ORE.configure(new OreFeatureConfig(ruleTest, state, size)) // vein size
-                .decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(
-                        0, // bottom offset
-                        topOffset, // min y level
-                        maxy))) // max y level
-                .repeat(numPerChunk); // number of veins per chunk
+        return createOre(registryName, ShurlinConfiguredFeatures.createOre(ruleTest, state, size, numPerChunk, maxy), selectors);
+    }
+
+    private static ConfiguredFeature<?, ?> createOre(String registryName, ConfiguredFeature<?, ?> ore, Predicate<BiomeSelectionContext> selectors) {
+        RegistryKey key = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier(Shurlin.MODID, registryName));
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), ore);
         BiomeModifications.addFeature(selectors, GenerationStep.Feature.UNDERGROUND_ORES, key);
         return ore;
     }
 
+//    private static ConfiguredFeature<?, ?> createOre(ImmutableList<OreFeatureConfig.Target> targets, int size, int repeat)
+
     static {
-        ORE_PLANT_IRON = createOre("ore_plant_iron", ShurlinConfiguredFeatures.States.PLANT_IRON_ORE_BLOCK, 6, 6, 48);
-        ORE_PLANT_GOLD = createOre("ore_plant_gold", ShurlinConfiguredFeatures.States.PLANT_GOLD_ORE_BLOCK, 6, 4, 32);
-        ORE_PLANT_JADE = createOre("ore_plant_jade", ShurlinConfiguredFeatures.States.PLANT_JADE_ORE_BLOCK, 4, 2, 16);
-        ORE_TENUOUS_METAL_SPIRIT = createOre("ore_tenuous_metal_spirit", OreFeatureConfig.Rules.NETHERRACK, ShurlinConfiguredFeatures.States.TENUOUS_METAL_SPIRIT_ORE_BLOCK, 2, 2, 64, BiomeSelectors.foundInTheNether());
-        ORE_TENUOUS_WOOD_SPIRIT = createOre("ore_tenuous_wood_spirit", ShurlinConfiguredFeatures.States.TENUOUS_WOOD_SPIRIT_ORE_BLOCK, 4, 4, 16, BiomeKeys.JUNGLE);
-        ORE_TENUOUS_WATER_SPIRIT = createOre("ore_tenuous_water_spirit", ShurlinConfiguredFeatures.States.TENUOUS_WATER_SPIRIT_ORE_BLOCK, 2, 3, 16, BiomeKeys.WARM_OCEAN);
-        ORE_TENUOUS_FIRE_SPIRIT = createOre("ore_tenuous_fire_spirit", OreFeatureConfig.Rules.NETHERRACK, ShurlinConfiguredFeatures.States.TENUOUS_FIRE_SPIRIT_ORE_BLOCK, 2, 2, 16, BiomeSelectors.foundInTheNether());
-        ORE_TENUOUS_EARTH_SPIRIT = createOre("ore_tenuous_earth_spirit", ShurlinConfiguredFeatures.States.TENUOUS_EARTH_SPIRIT_ORE_BLOCK, 4, 2, 16, Biome.Category.EXTREME_HILLS);
-        ORE_TENUOUS_WIND_SPIRIT = createOre("ore_tenuous_wind_spirit", ShurlinConfiguredFeatures.States.TENUOUS_WIND_SPIRIT_ORE_BLOCK, 2, 2, 16, Biome.Category.PLAINS);
-        ORE_TENUOUS_LIGHT_SPIRIT = createOre("ore_tenuous_light_spirit", Rules.SAND, ShurlinConfiguredFeatures.States.TENUOUS_LIGHT_SPIRIT_ORE_BLOCK, 4, 2, 56, 72, BiomeSelectors.includeByKey(BiomeKeys.DESERT));
-        ORE_TENUOUS_DARKNESS_SPIRIT = createOre("ore_tenuous_darkness_spirit", Rules.THEEND, ShurlinConfiguredFeatures.States.TENUOUS_DARKNESS_SPIRIT_ORE_BLOCK, 4, 4, 48, 80, BiomeSelectors.foundInTheEnd());
-        ORE_TENUOUS_POISON_SPIRIT = createOre("ore_tenuous_poison_spirit", ShurlinConfiguredFeatures.States.TENUOUS_POISON_SPIRIT_ORE_BLOCK, 4, 2, 16, BiomeKeys.SWAMP);
-        ORE_TENUOUS_LIGHTNING_SPIRIT = createOre("ore_tenuous_lightning_spirit", ShurlinConfiguredFeatures.States.TENUOUS_LIGHTNING_SPIRIT_ORE_BLOCK, 4, 2, 16, BiomeKeys.SNOWY_MOUNTAINS);
-        ORE_TENUOUS_ICE_SPIRIT = createOre("ore_tenuous_ice_spirit", Rules.ICE, ShurlinConfiguredFeatures.States.TENUOUS_ICE_SPIRIT_ORE_BLOCK, 2, 3, 48, 64, BiomeSelectors.categories(Biome.Category.ICY));
-        ORE_TENUOUS_TIME_SPACE_SPIRIT = createOre("ore_tenuous_time_space_spirit", Rules.THEEND, ShurlinConfiguredFeatures.States.TENUOUS_TIME_SPACE_SPIRIT_ORE_BLOCK, 4, 4, 48, 80, BiomeSelectors.foundInTheEnd());
+        PLANT_IRON_ORE_TARGETS = getTargets(ShurlinConfiguredFeatures.States.PLANT_IRON_ORE, ShurlinConfiguredFeatures.States.DEEPSLATE_PLANT_IRON_ORE);
+        PLANT_GOLD_ORE_TARGETS = getTargets(ShurlinConfiguredFeatures.States.PLANT_GOLD_ORE, ShurlinConfiguredFeatures.States.DEEPSLATE_PLANT_GOLD_ORE);
+        PLANT_JADE_ORE_TARGETS = getTargets(ShurlinConfiguredFeatures.States.PLANT_JADE_ORE, ShurlinConfiguredFeatures.States.DEEPSLATE_PLANT_JADE_ORE);
+        INFERIOR_SPIRIT_STONE_ORE_TARGETS = getTargets(ShurlinConfiguredFeatures.States.INFERIOR_SPIRIT_STONE_ORE_BLOCK, ShurlinConfiguredFeatures.States.DEEPSLATE_INFERIOR_SPIRIT_STONE_ORE_BLOCK);
+        ORE_PLANT_IRON = createOre("ore_plant_iron", Feature.ORE.configure(new OreFeatureConfig(PLANT_IRON_ORE_TARGETS, 6)).uniformRange(YOffset.getBottom(), YOffset.fixed(48)).spreadHorizontally().repeat(6),BiomeSelectors.foundInOverworld());
+        ORE_PLANT_GOLD = createOre("ore_plant_gold", Feature.ORE.configure(new OreFeatureConfig(PLANT_GOLD_ORE_TARGETS, 4)).uniformRange(YOffset.getBottom(), YOffset.fixed(32)).spreadHorizontally().repeat(4),BiomeSelectors.foundInOverworld());
+        ORE_PLANT_JADE = createOre("ore_plant_jade", Feature.ORE.configure(new OreFeatureConfig(PLANT_JADE_ORE_TARGETS, 4)).uniformRange(YOffset.getBottom(), YOffset.fixed(16)).spreadHorizontally().repeat(2),BiomeSelectors.foundInOverworld());
+//        ORE_INFERIOR_SPIRIT_STONE = createOre("ore_inferior_spirit_stone", INFERIOR_SPIRIT_STONE_ORE_TARGETS, ShurlinConfiguredFeatures.States.INFERIOR_SPIRIT_STONE_ORE_BLOCK, 6, 6, 32);
+        ORE_INFERIOR_SPIRIT_STONE = createOre("ore_inferior_spirit_stone", Feature.ORE.configure(new OreFeatureConfig(INFERIOR_SPIRIT_STONE_ORE_TARGETS, 4)).uniformRange(YOffset.getBottom(), YOffset.fixed(48)).spreadHorizontally().repeat(6),BiomeSelectors.foundInOverworld());
+//        ORE_INFERIOR_SPIRIT_CRYSTAL = createOre("ore_inferior_spirit_crystal", ShurlinConfiguredFeatures.States.INFERIOR_SPIRIT_CRYSTAL_CLUSTER, 4, 4, 32);
+        ORE_INFERIOR_SPIRIT_CRYSTAL = createOre("ore_inferior_spirit_crystal", Feature.GEODE.configure(new GeodeFeatureConfig(new GeodeLayerConfig(new SimpleBlockStateProvider(ShurlinConfiguredFeatures.States.AIR), new SimpleBlockStateProvider(ShurlinConfiguredFeatures.States.SPIRIT_CRYSTAL_BASE_BLOCK), new SimpleBlockStateProvider(ShurlinConfiguredFeatures.States.BUDDING_SPIRIT_CRYSTAL_BASE), new SimpleBlockStateProvider(ShurlinConfiguredFeatures.States.CALCITE), new SimpleBlockStateProvider(ShurlinConfiguredFeatures.States.SMOOTH_BASALT), ImmutableList.of(xyz.shurlin.block.Blocks.INFERIOR_SPIRIT_CRYSTAL_CLUSTER.getDefaultState()), BlockTags.FEATURES_CANNOT_REPLACE.getId(), BlockTags.GEODE_INVALID_BLOCKS.getId()), new GeodeLayerThicknessConfig(1.7D, 2.2D, 3.2D, 4.2D), new GeodeCrackConfig(0.95D, 2.0D, 2), 0.35D, 0.083D, true, UniformIntProvider.create(4, 6), UniformIntProvider.create(3, 4), UniformIntProvider.create(1, 2), -16, 16, 0.05D, 1)).uniformRange(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(53),BiomeSelectors.foundInOverworld());
+        ORE_STANDARD_SPIRIT_STONE = createOre("ore_deepslate_standard_spirit_stone", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES, ShurlinConfiguredFeatures.States.DEEPSLATE_STANDARD_SPIRIT_STONE_ORE_BLOCK, 4)).uniformRange(YOffset.aboveBottom(-32), YOffset.belowTop(0)).spreadHorizontally().repeat(4),BiomeSelectors.foundInOverworld());
     }
 
     private static final class Rules {
@@ -102,5 +93,9 @@ public class ShurlinOreFeatures {
             ICE = new TagMatchRuleTest(BlockTags.ICE);
             SAND = new BlockMatchRuleTest(Blocks.SAND);
         }
+    }
+
+    private static ImmutableList<OreFeatureConfig.Target> getTargets(BlockState o, BlockState d){
+        return ImmutableList.of(OreFeatureConfig.createTarget(OreFeatureConfig.Rules.STONE_ORE_REPLACEABLES, o), OreFeatureConfig.createTarget(OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES, d));
     }
 }

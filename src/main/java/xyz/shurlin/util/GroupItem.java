@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum GroupItem {
-    BREAKABLE(Items.ACACIA_LEAVES,Items.BIRCH_LEAVES,Items.DARK_OAK_LEAVES,Items.JUNGLE_LEAVES,Items.OAK_LEAVES, Items.SPRUCE_LEAVES
+    BREAKABLE(Items.ACACIA_LEAVES, Items.BIRCH_LEAVES, Items.DARK_OAK_LEAVES, Items.JUNGLE_LEAVES, Items.OAK_LEAVES, Items.SPRUCE_LEAVES
 
     );
 

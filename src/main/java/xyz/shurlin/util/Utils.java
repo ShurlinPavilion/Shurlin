@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import xyz.shurlin.Shurlin;
@@ -110,8 +109,10 @@ public class Utils {
     }
 
     public static final Identifier PACKET_ID_1 = new Identifier(Shurlin.MODID, "data_1");
-    public static final Identifier OPEN_CUL = new Identifier(Shurlin.MODID, "key_open_cul");
+//    public static final Identifier OPEN_CUL = new Identifier(Shurlin.MODID, "key_open_cul");
     public static final Identifier INJECT_SPIRIT = new Identifier(Shurlin.MODID, "inject_spirit");
+    public static final Identifier CULTIVATION_DATA = new Identifier(Shurlin.MODID, "cultivation_data");
+    public static final Identifier USE_SM = new Identifier(Shurlin.MODID, "use_sm");
 
     public static void spawnItem(World world, BlockPos pos, Item item, int cnt){
         world.spawnEntity(new ItemEntity(world, pos.getX(),pos.getY(),pos.getZ(),new ItemStack(item, cnt)));
@@ -136,7 +137,8 @@ public class Utils {
         RegistryKey<World> key = world.getRegistryKey() == World.OVERWORLD ? Dimensions.HOLY_FARMER : World.OVERWORLD;
         ServerWorld destination = minecraftServer.getWorld(key);
         if (destination != null && !entity.hasVehicle()) {
-            BlockPos pos = destination.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, entity.getBlockPos());
+//            BlockPos pos = destination.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, entity.getBlockPos());
+            BlockPos pos = new BlockPos(entity.getX(), 70, entity.getZ());
             FabricDimensionInternals.changeDimension(entity, destination,
                     new TeleportTarget(Vec3d.of(pos), Vec3d.ZERO, 0,0));
 //            entity.setPos(pos.getX(), pos.getY(), pos.getZ());

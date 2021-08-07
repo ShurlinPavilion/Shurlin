@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "shurlin:block/deepslate_standard_spirit_stone_ore"
+  }
+}

@@ -1,5 +1,6 @@
 package xyz.shurlin.block.worker;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +24,7 @@ public class ConcentratorBlock extends AbstractWorkerBlock {
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ConcentratorBlockEntity(level);
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new ConcentratorBlockEntity(level, pos, state);
     }
 }

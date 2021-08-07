@@ -15,7 +15,7 @@ public class StructureFeatures {
 //        Registry.register(Registry.STRUCTURE_FEATURE, id, structureFeature);
         return FabricStructureBuilder.create(id, structureFeature)
                 .step(GenerationStep.Feature.SURFACE_STRUCTURES)
-                .defaultConfig(32, 8, 12345)
+                .defaultConfig(16, 6, 12345)
                 .adjustsSurface()
                 .register();
 //        return structureFeature;

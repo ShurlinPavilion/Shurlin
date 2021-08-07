@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "shurlin:block/inferior_spirit_crystal_cluster"
+  }
+}

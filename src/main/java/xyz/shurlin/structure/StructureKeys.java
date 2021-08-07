@@ -32,7 +32,7 @@ public class StructureKeys {
     }
 
     private static RegistryKey<ConfiguredStructureFeature<?, ?>> register(String registryName){
-        return RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_WORLDGEN, new Identifier(Shurlin.MODID, registryName));
+        return RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY, new Identifier(Shurlin.MODID, registryName));
     }
 
 //    private static void create()

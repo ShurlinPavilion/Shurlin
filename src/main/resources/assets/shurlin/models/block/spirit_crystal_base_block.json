@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "shurlin:block/spirit_crystal_base_block"
+  }
+}

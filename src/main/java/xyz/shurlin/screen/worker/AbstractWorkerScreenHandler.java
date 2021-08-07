@@ -7,8 +7,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeInputProvider;
+import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.PropertyDelegate;
@@ -41,7 +41,7 @@ public abstract class AbstractWorkerScreenHandler extends AbstractRecipeScreenHa
     }
 
     @Override
-    public void populateRecipeFinder(RecipeFinder finder) {
+    public void populateRecipeFinder(RecipeMatcher finder) {
         if(this.inventory instanceof RecipeInputProvider){
             ((RecipeInputProvider) this.inventory).provideRecipeInputs(finder);
         }
@@ -123,6 +123,11 @@ public abstract class AbstractWorkerScreenHandler extends AbstractRecipeScreenHa
     @Override
     public RecipeBookCategory getCategory() {
         return null;
+    }
+
+    @Override
+    public boolean canInsertIntoSlot(int i) {
+        return i != size - 1;
     }
 }
 

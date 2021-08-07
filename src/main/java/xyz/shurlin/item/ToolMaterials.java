@@ -3,6 +3,7 @@ package xyz.shurlin.item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Lazy;
+import xyz.shurlin.item.Items;
 
 import java.util.function.Supplier;
 

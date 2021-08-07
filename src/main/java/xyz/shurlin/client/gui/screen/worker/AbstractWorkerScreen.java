@@ -9,12 +9,13 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import xyz.shurlin.Shurlin;
+import xyz.shurlin.client.gui.screen.ShurlinScreen;
 import xyz.shurlin.screen.worker.AbstractWorkerScreenHandler;
 
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public abstract class AbstractWorkerScreen<T extends AbstractWorkerScreenHandler> extends HandledScreen<T> {
+public abstract class AbstractWorkerScreen<T extends AbstractWorkerScreenHandler> extends ShurlinScreen<T> {
     private final Identifier TEXTURE;
     protected int progressLength;
 
@@ -32,8 +33,7 @@ public abstract class AbstractWorkerScreen<T extends AbstractWorkerScreenHandler
 
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Objects.requireNonNull(this.client).getTextureManager().bindTexture(TEXTURE);
+        render1(TEXTURE);
         this.drawTexture(matrices, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
     }
 }

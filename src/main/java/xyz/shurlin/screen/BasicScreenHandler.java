@@ -53,7 +53,7 @@ public class BasicScreenHandler<I extends Inventory> extends ScreenHandler {
         addPlayerInventorySlots(8, 84);
     }
 
-    private void addSlot(int index, int x, int y){
+    protected void addSlot(int index, int x, int y){
         this.addSlot(new Slot(this.inventory, index, x, y));
     }
 

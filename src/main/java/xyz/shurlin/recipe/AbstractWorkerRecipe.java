@@ -69,7 +69,7 @@ public abstract class AbstractWorkerRecipe implements Recipe<Inventory> {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getRecipeKindIcon() {
+    public ItemStack createIcon() {
         return new ItemStack(Items.MYSTERIOUS_SPIRIT_OF_PLANT);
     }
 

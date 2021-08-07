@@ -1,0 +1,31 @@
+{
+    "variants": {
+        "facing=east": {
+            "model": "shurlin:block/bright_moon_pollen",
+            "y": 90,
+            "x": 90
+        },
+        "facing=north": {
+            "model": "shurlin:block/bright_moon_pollen",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "shurlin:block/bright_moon_pollen",
+            "y": 180,
+            "x": 90
+        },
+        "facing=west": {
+            "model": "shurlin:block/bright_moon_pollen",
+            "y": 270,
+            "x": 90
+        },
+        "facing=up": {
+            "model": "shurlin:block/bright_moon_pollen"
+
+        },
+        "facing=down": {
+            "model": "shurlin:block/bright_moon_pollen",
+            "x": 180
+        }
+    }
+}

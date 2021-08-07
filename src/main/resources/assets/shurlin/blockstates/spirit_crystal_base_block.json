@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "shurlin:block/spirit_crystal_base_block" }
+    }
+}

@@ -2,6 +2,7 @@ package xyz.shurlin.block;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -19,7 +20,7 @@ import xyz.shurlin.world.dimension.Dimensions;
 public class HolyFarmerPortalBlock extends BasicBlock {
     private static final VoxelShape SHAPE;
 
-    public HolyFarmerPortalBlock(Settings settings) {
+    public HolyFarmerPortalBlock(AbstractBlock.Settings settings) {
         super(settings);
 //        NetherPortalBlock
     }

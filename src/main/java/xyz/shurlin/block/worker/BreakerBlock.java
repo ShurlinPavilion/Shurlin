@@ -1,5 +1,7 @@
 package xyz.shurlin.block.worker;
 
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +11,7 @@ import xyz.shurlin.block.worker.entity.BreakerBlockEntity;
 import xyz.shurlin.util.Stats;
 
 public class BreakerBlock extends AbstractWorkerBlock {
-    public BreakerBlock(Settings settings) {
+    public BreakerBlock(AbstractBlock.Settings settings) {
         super(settings);
     }
 
@@ -23,7 +25,7 @@ public class BreakerBlock extends AbstractWorkerBlock {
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new BreakerBlockEntity(level);
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new BreakerBlockEntity(level, pos, state);
     }
 }

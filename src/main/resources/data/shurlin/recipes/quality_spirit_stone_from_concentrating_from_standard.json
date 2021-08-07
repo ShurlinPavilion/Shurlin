@@ -1,0 +1,12 @@
+{
+  "type": "shurlin:concentrating",
+  "ingredients": [
+    {
+      "item": "shurlin:standard_spirit_stone",
+      "count": 16
+    }
+  ],
+  "result": "shurlin:quality_spirit_stone",
+  "workingTime": 100,
+  "shurlinLevel": 10
+}

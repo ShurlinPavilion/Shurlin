@@ -1,30 +1,29 @@
 package xyz.shurlin.cultivation.screen;
 
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.util.Identifier;
+import xyz.shurlin.Shurlin;
 import xyz.shurlin.cultivation.CultivatedPlayerAccessor;
-import xyz.shurlin.cultivation.CultivationRealm;
 import xyz.shurlin.screen.ScreenHandlerTypes;
 
 public class CultivationScreenHandler extends ScreenHandler {
-    CultivationRealm realm;
+    CultivatedPlayerAccessor accessor;
 
-    public CultivationScreenHandler(int syncId, CultivationRealm realm) {
+    public CultivationScreenHandler(int syncId, CultivatedPlayerAccessor accessor) {
         super(ScreenHandlerTypes.CULTIVATION_SCREEN_HANDLER_TYPE, syncId);
-        this.realm = realm;
+        this.accessor = accessor;
     }
 
     public CultivationScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, ((CultivatedPlayerAccessor) playerInventory.player).getter());
+        this(syncId, (CultivatedPlayerAccessor) playerInventory.player);
     }
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return ((CultivatedPlayerAccessor) player).getter() != null;
-    }
-
-    public CultivationRealm getRealm() {
-        return realm;
+        return ((CultivatedPlayerAccessor)player).getRealm() != null;
     }
 }

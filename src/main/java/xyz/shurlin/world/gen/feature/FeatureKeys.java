@@ -15,7 +15,7 @@ public class FeatureKeys {
 
 
     private static RegistryKey<ConfiguredFeature<?,?>> register(String registryName){
-        return RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, new Identifier(Shurlin.MODID, registryName));
+        return RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, new Identifier(Shurlin.MODID, registryName));
     }
 
 //    public static void registerAll(){

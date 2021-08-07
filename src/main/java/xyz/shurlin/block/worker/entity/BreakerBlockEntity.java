@@ -1,22 +1,24 @@
 package xyz.shurlin.block.worker.entity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.math.BlockPos;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.recipe.RecipeTypes;
 import xyz.shurlin.screen.worker.BreakerScreenHandler;
 
 public class BreakerBlockEntity extends AbstractWorkerBlockEntity {
 
-    public BreakerBlockEntity(int level) {
-        super(BlockEntityTypes.BREAKER_BLOCK_ENTITY, "breaker", level, RecipeTypes.BREAKING);
+    public BreakerBlockEntity(int level, BlockPos blockPos, BlockState blockState) {
+        super(BlockEntityTypes.BREAKER_BLOCK_ENTITY, blockPos, blockState, "breaker", level, RecipeTypes.BREAKING);
     }
 
-    public BreakerBlockEntity(){
-        this(0);
+    public BreakerBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(BlockEntityTypes.BREAKER_BLOCK_ENTITY, blockPos, blockState, "breaker", 1, RecipeTypes.BREAKING);
     }
 
     @Override
@@ -61,7 +63,6 @@ public class BreakerBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    @Override
     public void tick() {
         if (this.world != null && !this.world.isClient) {
             ItemStack input = this.inventory.get(0);

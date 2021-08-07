@@ -21,7 +21,7 @@ public class AncientTreeFeatureConfig implements FeatureConfig {
         this.treeKind = treeKind;
     }
 
-    public static enum TreeKind implements StringIdentifiable {
+    public enum TreeKind implements StringIdentifiable {
         OAK(StructurePieceTypes.ANCIENT_OAK_TREE, "oak", LootTables.ANCIENT_OAK_TREE_LEAVES_CHEST, LootTables.ANCIENT_OAK_TREE_ROOT_CHEST),
         BIRCH(StructurePieceTypes.ANCIENT_BIRCH_TREE, "birch", LootTables.ANCIENT_BIRCH_TREE_LEAVES_CHEST, LootTables.ANCIENT_BIRCH_TREE_ROOT_CHEST),
         DARK_OAK(StructurePieceTypes.ANCIENT_DARK_OAK_TREE, "dark_oak", LootTables.ANCIENT_DARK_OAK_TREE_LEAVES_CHEST, LootTables.ANCIENT_DARK_OAK_TREE_ROOT_CHEST),

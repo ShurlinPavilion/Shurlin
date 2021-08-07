@@ -3,6 +3,7 @@ package xyz.shurlin.screen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.screen.slot.Slot;
 import xyz.shurlin.screen.slot.LockableSlot;
 
 public class BiggerContainerScreenHandler extends BasicScreenHandler<Inventory> {
@@ -20,7 +21,12 @@ public class BiggerContainerScreenHandler extends BasicScreenHandler<Inventory> 
     }
 
     @Override
+    protected void addSlot(int index, int x, int y) {
+        this.addSlot(new LockableSlot(this.inventory, index, x, y));
+    }
+
+    @Override
     protected void addPlayerInventorySlot(int index, int x, int y) {
-        this.addSlot(new LockableSlot<>(this.playerInventory, index, x, y, this));
+        this.addSlot(new LockableSlot(this.playerInventory, index, x, y));
     }
 }

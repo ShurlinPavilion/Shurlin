@@ -2,8 +2,10 @@ package xyz.shurlin.world.biome;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import xyz.shurlin.entity.EntityTypes;
 
 import static xyz.shurlin.structure.StructureKeys.*;
 
@@ -23,6 +25,7 @@ public class BiomeGenerator {
         BiomeModifications.addStructure(BiomeSelectors.includeByKey(BiomeKeys.SAVANNA), ANCIENT_ACACIA_TREE);
         BiomeModifications.addStructure(BiomeSelectors.includeByKey(BiomeKeys.SNOWY_MOUNTAINS), ANCIENT_SPRUCE_TREE);
         BiomeModifications.addStructure(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE), ANCIENT_JUNGLE_TREE);
+//        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.CREATURE, EntityTypes.ROAMING_SPIRIT_ENTITY_TYPE, 80, 4, 4);
 //        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLANT_IRON);
 //        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLANT_GOLD);
 //        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, ORE_PLANT_JADE);

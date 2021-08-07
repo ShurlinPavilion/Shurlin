@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "shurlin:block/inferior_spirit_crystal_cluster",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "shurlin:block/inferior_spirit_crystal_cluster",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "shurlin:block/inferior_spirit_crystal_cluster",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "shurlin:block/inferior_spirit_crystal_cluster",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "shurlin:block/inferior_spirit_crystal_cluster"
+    },
+    "facing=west": {
+      "model": "shurlin:block/inferior_spirit_crystal_cluster",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

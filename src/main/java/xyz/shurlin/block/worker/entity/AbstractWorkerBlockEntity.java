@@ -4,26 +4,26 @@ import annotations.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 import xyz.shurlin.block.entity.BasicBlockEntity;
 import xyz.shurlin.recipe.AbstractWorkerRecipe;
 import xyz.shurlin.util.ShurlinLevel;
 
-public abstract class AbstractWorkerBlockEntity extends BasicBlockEntity implements ShurlinLevel, Tickable {
+public abstract class AbstractWorkerBlockEntity extends BasicBlockEntity implements ShurlinLevel {
     int workTime;
     int workTimeTotal;
     final PropertyDelegate propertyDelegate;
     int level;
     RecipeType<? extends AbstractWorkerRecipe> recipeType;
 
-    AbstractWorkerBlockEntity(BlockEntityType<?> blockEntityType, String containerName, int level, RecipeType<? extends AbstractWorkerRecipe> recipeType) {
-        super(blockEntityType, containerName);
-        this.level = level;
+    public AbstractWorkerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, String containerName, int level, RecipeType<? extends AbstractWorkerRecipe> recipeType) {
+        super(blockEntityType, blockPos, blockState, containerName);
         this.propertyDelegate = getPropertyDelegate();
+        this.level = level;
         this.recipeType = recipeType;
     }
 
@@ -35,15 +35,15 @@ public abstract class AbstractWorkerBlockEntity extends BasicBlockEntity impleme
     protected abstract PropertyDelegate getPropertyDelegate();
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
         this.workTime = tag.getInt("WorkTime");
         this.workTimeTotal = tag.getInt("WorkTimeTotal");
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
         tag.putInt("WorkTime", (short)this.workTime);
         tag.putInt("WorkTimeTotal", (short)this.workTimeTotal);
         return tag;

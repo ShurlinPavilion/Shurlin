@@ -1,10 +1,10 @@
 package xyz.shurlin.world.biome;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.DefaultBiomeCreator;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep;
@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeatures;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
+import xyz.shurlin.entity.EntityTypes;
 import xyz.shurlin.world.gen.feature.ShurlinBiomeFeatures;
 import xyz.shurlin.world.gen.feature.ShurlinConfiguredFeatures;
 import xyz.shurlin.world.gen.feature.ShurlinConfiguredStructureFeatures;
@@ -29,6 +30,7 @@ public class ShurlinBiomeCreator {
         SpawnSettings.Builder builder = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addFarmAnimals(builder);
         DefaultBiomeFeatures.addBatsAndMonsters(builder);
+//        builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityTypes.ROAMING_SPIRIT_ENTITY_TYPE, 120, 4, 4));
         GenerationSettings.Builder builder2 = new GenerationSettings.Builder().surfaceBuilder(ConfiguredSurfaceBuilders.GRASS);
         DefaultBiomeFeatures.addDefaultUndergroundStructures(builder2);
         builder2.structureFeature(ConfiguredStructureFeatures.RUINED_PORTAL);
@@ -80,7 +82,7 @@ public class ShurlinBiomeCreator {
 
     public static Biome createFireLand(){
         SpawnSettings.Builder builder = new SpawnSettings.Builder();
-        builder.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.MAGMA_CUBE, 2, 4, 4));
+//        builder.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.MAGMA_CUBE, 2, 4, 4));
         GenerationSettings.Builder builder2 = new GenerationSettings.Builder().surfaceBuilder(ShurlinConfiguredSurfaceBuilder.FIRE_LAND).feature(GenerationStep.Feature.VEGETAL_DECORATION, ShurlinConfiguredFeatures.PATCH_FIRE);
         DefaultBiomeFeatures.addLandCarvers(builder2);
         ShurlinBiomeFeatures.addHotSprings(builder2);

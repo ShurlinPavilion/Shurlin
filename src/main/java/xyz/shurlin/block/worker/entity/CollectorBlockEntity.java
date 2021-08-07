@@ -1,10 +1,12 @@
 package xyz.shurlin.block.worker.entity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.math.BlockPos;
 import xyz.shurlin.block.entity.BlockEntityTypes;
 import xyz.shurlin.recipe.RecipeTypes;
 import xyz.shurlin.screen.worker.CollectorScreenHandler;
@@ -13,12 +15,12 @@ import xyz.shurlin.util.Collectable;
 public class CollectorBlockEntity extends AbstractWorkerBlockEntity {
     private int consistence;
 
-    public CollectorBlockEntity(int level) {
-        super(BlockEntityTypes.COLLECTOR_BLOCK_ENTITY, "collector", level, RecipeTypes.COLLECTING);
+    public CollectorBlockEntity(int level, BlockPos blockPos, BlockState blockState) {
+        super(BlockEntityTypes.COLLECTOR_BLOCK_ENTITY, blockPos, blockState, "collector", level, RecipeTypes.COLLECTING);
     }
 
-    public CollectorBlockEntity(){
-        this(0);
+    public CollectorBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(BlockEntityTypes.COLLECTOR_BLOCK_ENTITY, blockPos, blockState, "collector", 1, RecipeTypes.COLLECTING);
     }
 
     @Override
@@ -67,7 +69,6 @@ public class CollectorBlockEntity extends AbstractWorkerBlockEntity {
         };
     }
 
-    @Override
     public void tick() {
         if(this.world != null && !this.world.isClient){
             ItemStack input = this.inventory.get(0);

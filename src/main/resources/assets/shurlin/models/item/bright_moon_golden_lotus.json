@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "shurlin:item/bright_moon_golden_lotus"
+  }
+}
